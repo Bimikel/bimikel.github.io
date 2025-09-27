@@ -1,29 +1,68 @@
-/* CSS styles for index.html */
-
-/* Global styles */
-body {
-    font-family: Arial, sans-serif;
+/* Modern CSS Reset and Global Styles */
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
-#main {
-    font-size: 120%;
-    background-color: #6f6c6c;
-    color:white;
-    width: 20%;
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f8f9fa;
 }
 
-#contactinfo {
-    padding-top: 8%;
+/* Navigation Styles */
+.navtop {
+    background-color: #ffffff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 .navis {
-    text-align: right;
+    text-align: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
 }
 
+.navis ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.navis li {
+    display: inline-block;
+}
+
+.navis a {
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.navis a:hover {
+    background-color: #e9ecef;
+    color: #007bff;
+}
+
+/* Main Content Layout */
 .container {
     display: flex;
+    align-items: center;
+    min-height: 60vh;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    gap: 3rem;
 }
 
 .index {
@@ -39,51 +78,209 @@ body {
     align-items: center;
 }
 
+.rectangleimage {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Typography */
+h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #34495e;
+    margin-bottom: 1.5rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #34495e;
+    margin-bottom: 1rem;
+}
+
+p {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 1rem;
+    line-height: 1.7;
+}
+
+/* Content Sections */
+.topbox {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.bottombox, .bottombox2 {
+    background-color: white;
+    padding: 2rem;
+    margin: 2rem auto;
+    max-width: 1200px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.section2 {
+    background-color: white;
+    padding: 2rem;
+    margin: 2rem auto;
+    max-width: 1200px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* Contact Info Styling */
+#contactinfo {
+    padding-top: 0;
+    margin-bottom: 1rem;
+}
+
+ol {
+    list-style: none;
+    counter-reset: item;
+}
+
+ol li {
+    counter-increment: item;
+    margin-bottom: 0.8rem;
+    padding-left: 2rem;
+    position: relative;
+}
+
+ol li:before {
+    content: counter(item);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-weight: bold;
+    border-radius: 50%;
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 0.9rem;
+}
+
+ol a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+ol a:hover {
+    text-decoration: underline;
+}
+
+/* Footer */
+#copyright {
+    background-color: #2c3e50;
+    color: white;
+    text-align: center;
+    padding: 1.5rem;
+    margin-top: 3rem;
+}
+
+#copyright2 {
+    color: white;
+    font-size: 0.9rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        padding: 1rem;
+        gap: 2rem;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    .navis ul {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .bottombox, .bottombox2, .section2 {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .navis {
+        padding: 0 1rem;
+    }
+    
+    .navis ul {
+        gap: 0.25rem;
+    }
+    
+    .navis a {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    .topbox {
+        padding: 1.5rem;
+    }
+}
+
+/* Legacy styles for compatibility */
 .circleimage {
     height: 40%;
     position: relative;
     border-radius: 50%;
 }
 
-.right {
-    display: flex;
-    flex-direction: column;
-}
-
 .section1 {
     display: flex;
     padding-top: 5%;
-    padding-left:5%;
+    padding-left: 5%;
     padding-bottom: 6%;
-  }
-
-  .content {
-    width: 80%; /* Adjust this value as needed */
-    padding-right: 20%;
-    position: relative;
-  }
-
-  img {
-    max-width: 40%; /* Adjust this value as needed */
-    height: auto;
-  }
-
-h1 {
-    background-image: url(xc2worldtree.png);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: 0px -125px;
-    padding: 30px;
-    margin: 0;
-    color: #000000;
-    text-align: center;
 }
 
-.section2 {
-    padding-left: 5%;
-    padding-top: 5%;
-    padding-bottom: 5%;
-    padding-right: 5%;
+.content {
+    width: 80%;
+    padding-right: 20%;
+    position: relative;
+}
+
+img {
+    max-width: 40%;
+    height: auto;
 }
 
 .resume {
@@ -92,7 +289,6 @@ h1 {
     padding-top: 5%;
 }
 
-/* Navigation styles */
 nav {
     background-color: #a19b9b;
     padding-top: 10px;
@@ -104,20 +300,8 @@ nav {
     border-radius: 1px;
 }
 
-#copyright {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    width: 100%;
-    background-color: white;
-    text-align: center;
-}
-
-#copyright2 {
-    color: rgb(0, 0, 0);
-}
-
 nav ul {
-    list-style-type:none;
+    list-style-type: none;
     margin: 0;
     padding: 0;
 }
@@ -133,7 +317,6 @@ nav ul li a {
     text-decoration: none;
 }
 
-/* Footer styles */
 footer {
     background-color: #333;
     color: #fff;
@@ -141,13 +324,11 @@ footer {
     text-align: center;
 }
 
-/* Change background color on hover */
 button:hover {
     background-color: #4CAF50;
     color: white;
-  }
-  
-  /* Grow font size on hover */
-  a:hover {
+}
+
+a:hover {
     text-decoration: underline;
-  }
+}
