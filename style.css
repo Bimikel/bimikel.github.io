@@ -189,6 +189,25 @@ p {
     object-fit: contain;
 }
 
+.view-counter {
+    margin-top: 2rem;
+    text-align: center;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e9ecef;
+}
+
+.view-counter p {
+    color: #666;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+.view-counter #viewCount {
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 1.1rem;
+}
+
 ol {
     list-style: none;
     counter-reset: item;
