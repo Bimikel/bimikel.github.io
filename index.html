@@ -4,89 +4,211 @@
         <meta charset="UTF-8">
         <title>Michael Zuo | Bimikel</title> 
         <link rel="stylesheet" href="style.css">
-    </head> 
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-DQSFRR6M8D"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DQSFRR6M8D');
+        </script>
+    </head>
     <body>
         <div class="rowtop">
-            <nav class = "navtop">
+            <nav class="navtop">
                 <ul class="navis">
-                    <li class="navi"><a href="index.html">Home</a></li>
-                    <li class="navi"><a href="resume.html">Resume</a></li>
-                    <li class="navi"><a href="projects.html">Projects</a></li>
-                    <li class="navi"><a href="activities.html">Activities</a></li>
+                    <li class="navi"><a href="#home">Home</a></li>
+                    <li class="navi"><a href="#resume">Resume</a></li>
+                    <li class="navi"><a href="#projects">Projects</a></li>
+                    <li class="navi"><a href="#activities">Activities</a></li>
                 </ul>
             </nav>
         </div>
-        <section class = "container">
-            <div class = "index image">
-                <img src="jackfrostcomp.jpg" alt="Picture of Michael Z" class ="rectangleimage">
-            </div>
-            <section class = "index right">
-                <div class="topbox">
-                    <h1>Hello, I'm Michael Zuo.</h1>
-                    <h1>I'm a software developer and problem-solver.</h1>
+
+        <!-- Home Section -->
+        <section id="home" class="home-section">
+            <section class="container">
+                <div class="index image">
+                    <img src="jackfrostcomp.jpg" alt="Picture of Michael Z" class="rectangleimage">
                 </div>
+                <section class="index right">
+                    <div class="topbox">
+                        <h1>Hello, I'm Michael Zuo.</h1>
+                        <h1>I'm a software developer and problem-solver.</h1>
+                    </div>
+                </section>
             </section>
+            
+            <div class="bottombox">
+                <p>
+                    I'm a self-motivated and detail-oriented learner with strong problem-solving skills.
+                    While pursuing Computer Science, I'm consistently seeking out challenges to push my boundaries.
+                    Whether it's tackling complex algorithms or building innovative software solutions, I thrive on the opportunity to create connections between diverse technologies and solve real-world problems. 
+                </p>
+            </div>
+            <div class="bottombox2">
+                <h2 id="contactinfo">
+                    Contact Info
+                </h2>
+                <p>Feel free to reach out!</p>
+                <div class="contact-icons">
+                    <a href="mailto:mikeyzuo2399@gmail.com" class="contact-icon" title="Email">
+                        <img src="icons/email.png" alt="Email" />
+                    </a>
+                    <a href="https://github.com/Bimikel" class="contact-icon" title="GitHub" target="_blank" rel="noopener noreferrer">
+                        <img src="icons/github.png" alt="GitHub" />
+                    </a>
+                    <a href="https://www.linkedin.com/in/mikey-zuo/" class="contact-icon" title="LinkedIn" target="_blank" rel="noopener noreferrer">
+                        <img src="icons/linkedin.png" alt="LinkedIn" />
+                    </a>
+                </div>
+                <a href='https://www.counters-free.net/'>free Counters</a> <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=e13581c146e314daaa5cf22099e8e55027355a78'></script>
+                <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1446458/t/0"></script>
+            </div>
         </section>
-        
-        <div class ="bottombox">
-            <p>
-                I'm a self-motivated and detail-oriented learner with strong problem-solving skills.
-                While pursuing Computer Science, I'm consistently seeking out challenges to push my boundaries.
-                Whether it's tackling complex algorithms or building innovative software solutions, I thrive on the opportunity to create connections between diverse technologies and solve real-world problems. 
-            </p>
-        </div>
-        <div class="bottombox2">
-            <h2 id="contactinfo">
-                Contact Info
-            </h2>
-            <p>Feel free to reach out!</p>
-            <div class="contact-icons">
-                <a href="mailto:mikeyzuo2399@gmail.com" class="contact-icon" title="Email">
-                    <img src="icons/email.png" alt="Email" />
-                </a>
-                <a href="https://github.com/Bimikel" class="contact-icon" title="GitHub" target="_blank" rel="noopener noreferrer">
-                    <img src="icons/github.png" alt="GitHub" />
-                </a>
-                <a href="https://www.linkedin.com/in/mikey-zuo/" class="contact-icon" title="LinkedIn" target="_blank" rel="noopener noreferrer">
-                    <img src="icons/linkedin.png" alt="LinkedIn" />
-                </a>
+
+        <!-- Resume Section -->
+        <section id="resume" class="resume-section">
+            <div class="resume">
+                <h2>Michael's Resume</h2>
+                <iframe src="resume/Michael_Zuo_Resume_11_23_25.pdf" width="100%" height="600px"></iframe>
             </div>
-            <div class="view-counter">
-                <p>Page Views: <span id="viewCount">Loading...</span></p>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="projects-section">
+            <div class="section2">
+                <h2>Projects</h2>
             </div>
-        </div>
+        </section>
+
+        <!-- Activities Section -->
+        <section id="activities" class="activities-section">
+            <div class="section2">
+                <h2>Activities & Interests</h2>
+                <p class="intro-text">
+                    Beyond coding and problem-solving, I'm passionate about staying active and exploring creative outlets. 
+                    These activities help me maintain balance and often inspire new approaches to technical challenges.
+                </p>
+                
+                <div class="activities-grid">
+                    <div class="activity-card">
+                        <h3>🏃‍♂️ Athletics & Fitness</h3>
+                        <p>I'm an active athlete who enjoys staying physically fit. Whether it's running, team sports, or hitting the gym, 
+                        I believe physical activity enhances mental clarity and problem-solving abilities.</p>
+                    </div>
+                    
+                    <div class="activity-card">
+                        <h3>🎮 Gaming & Technology</h3>
+                        <p>As a Nintendo enthusiast, I appreciate well-designed games and user experiences. Gaming has taught me 
+                        about user interface design, problem-solving patterns, and the importance of intuitive interactions.</p>
+                    </div>
+                    
+                    <div class="activity-card">
+                        <h3>🎬 Film & Storytelling</h3>
+                        <p>I'm passionate about movies and storytelling. Films offer insights into human nature, creativity, and 
+                        different perspectives on life. This appreciation for narrative helps me think about user experience 
+                        and communication in my development work.</p>
+                    </div>
+                </div>
+                
+                <div class="favorites-section">
+                    <h2>My Favorites</h2>
+                    <p class="favorites-intro">Here are some of my favorite games and anime that inspire me:</p>
+                    
+                    <div class="favorites-categories">
+                        <div class="favorite-category">
+                            <h3>🎮 Favorite Games</h3>
+                            <div class="favorites-grid">
+                                <div class="favorite-item">
+                                    <div class="favorite-image">
+                                        <img src="favorites/xc2.jpg" alt="Xenoblade Chronicles 2" />
+                                    </div>
+                                    <h4>Xenoblade Chronicles 2</h4>
+                                </div>
+                                
+                                <div class="favorite-item">
+                                    <div class="favorite-image">
+                                        <img src="favorites/smtnocturne.jpeg" alt="Shin Megami Tensei: Nocturne" />
+                                    </div>
+                                    <h4>Shin Megami Tensei: Nocturne</h4>
+                                </div>
+                                
+                                <div class="favorite-item">
+                                    <div class="favorite-image">
+                                        <img src="favorites/hollowknight.jpeg" alt="Hollow Knight" />
+                                    </div>
+                                    <h4>Hollow Knight</h4>
+                                </div>
+                                
+                                <div class="favorite-item">
+                                    <div class="favorite-image">
+                                        <img src="favorites/13sentinels.jpg" alt="13 Sentinels: Aegis Rim" />
+                                    </div>
+                                    <h4>13 Sentinels: Aegis Rim</h4>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="favorite-category">
+                            <h3>🎬 Favorite Anime</h3>
+                            <div class="favorites-grid">
+                                <div class="favorite-item">
+                                    <div class="favorite-image">
+                                        <img src="favorites/aot.jpg" alt="Attack on Titan" />
+                                    </div>
+                                    <h4>Attack on Titan</h4>
+                                </div>
+                                
+                                <div class="favorite-item">
+                                    <div class="favorite-image">
+                                        <img src="favorites/durarara.jpg" alt="Durarara" />
+                                    </div>
+                                    <h4>Durarara</h4>
+                                </div>
+                                
+                                <div class="favorite-item">
+                                    <div class="favorite-image">
+                                        <img src="favorites/demonslayer.jpg" alt="Demon Slayer" />
+                                    </div>
+                                    <h4>Demon Slayer</h4>
+                                </div>
+                                
+                                <div class="favorite-item">
+                                    <div class="favorite-image">
+                                        <img src="favorites/chainsaw_man.jpg" alt="Chainsaw Man" />
+                                    </div>
+                                    <h4>Chainsaw Man</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <nav id="copyright">
+            <p id="copyright2">© 2024 Michael Zuo. All rights reserved.</p>
+        </nav>
+
+        <a href='https://www.counters-free.net/'>free Counters</a> <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=e13581c146e314daaa5cf22099e8e55027355a78'></script>
+        <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1446458/t/0"></script>
+
         <script>
-            // Page view counter - tries API first, falls back to localStorage
-            (function() {
-                const viewCountElement = document.getElementById('viewCount');
-                if (!viewCountElement) return;
-                
-                // Try CountAPI first
-                const namespace = 'michael-zuo';
-                const key = 'site-views';
-                const countApiUrl = `https://api.countapi.xyz/hit/${namespace}/${key}`;
-                
-                fetch(countApiUrl)
-                    .then(response => {
-                        if (!response.ok) throw new Error('API not available');
-                        return response.json();
-                    })
-                    .then(data => {
-                        if (data && typeof data.value === 'number') {
-                            viewCountElement.textContent = data.value.toLocaleString();
-                        } else {
-                            throw new Error('Invalid API response');
-                        }
-                    })
-                    .catch(error => {
-                        // Fallback to localStorage
-                        console.log('Using localStorage fallback');
-                        let count = parseInt(localStorage.getItem('pageViews') || '0');
-                        count++;
-                        localStorage.setItem('pageViews', count);
-                        viewCountElement.textContent = count.toLocaleString();
-                    });
-            })();
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
         </script>
     </body> 
 </html>
