@@ -16,6 +16,62 @@ body {
     background-color: #36393f;
 }
 
+/* Site header using Playfair Display for a distinct title */
+.site-header {
+    background: transparent;
+    padding: 2rem 0 1.5rem 0;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.site-header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.site-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    color: #ffffff;
+    letter-spacing: 1.5px;
+    margin: 0;
+    font-weight: 700;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5), 0 0 20px rgba(88, 101, 242, 0.2);
+    position: relative;
+    display: inline-block;
+    padding-bottom: 0.5rem;
+}
+
+.site-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #5865f2, transparent);
+}
+
+@media (max-width: 768px) {
+    .site-title { 
+        font-size: 2rem;
+        letter-spacing: 1px;
+    }
+    .site-header {
+        padding: 1.5rem 0 1rem 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .site-title { 
+        font-size: 1.75rem;
+        letter-spacing: 0.5px;
+    }
+}
+
 /* Section spacing for single-page layout */
 .home-section,
 .resume-section,
@@ -145,6 +201,15 @@ p {
     border-radius: 12px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
     border: 1px solid #40444b;
+}
+
+.topbox h1 {
+    font-size: 1.3rem;
+    font-weight: 400;
+    line-height: 1.6;
+    color: #dcddde;
+    margin-bottom: 0;
+    letter-spacing: 0.3px;
 }
 
 .bottombox, .bottombox2 {
