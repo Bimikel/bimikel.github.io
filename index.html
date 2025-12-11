@@ -245,35 +245,6 @@
 
             // Add event listener to toggle button
             themeToggle.addEventListener('click', toggleTheme);
-
-            // Global visitor counter using CountAPI
-            async function updateVisitCount() {
-                const namespace = 'michaelzuo-personalsite';
-                const key = 'visitor-count';
-                const apiUrl = `https://api.countapi.xyz/hit/${namespace}/${key}`;
-                
-                try {
-                    // Increment the counter and get the new value
-                    const response = await fetch(apiUrl);
-                    const data = await response.json();
-                    
-                    // Display the count
-                    const visitCountElement = document.getElementById('visitCount');
-                    if (visitCountElement && data.value !== undefined) {
-                        visitCountElement.textContent = data.value.toLocaleString();
-                    }
-                } catch (error) {
-                    console.error('Error updating visit count:', error);
-                    // Fallback: show a message or hide the counter
-                    const visitCountElement = document.getElementById('visitCount');
-                    if (visitCountElement) {
-                        visitCountElement.textContent = '...';
-                    }
-                }
-            }
-
-            // Update visit count when page loads
-            updateVisitCount();
         </script>
     </body> 
 </html>
