@@ -17,12 +17,17 @@
     <body>
         <div class="rowtop">
             <nav class="navtop">
-                <ul class="navis">
-                    <li class="navi"><a href="#home">Home</a></li>
-                    <li class="navi"><a href="#resume">Resume</a></li>
-                    <!-- <li class="navi"><a href="#projects">Projects</a></li> -->
-                    <li class="navi"><a href="#activities">Activities</a></li>
-                </ul>
+                <div class="navtop-inner">
+                    <ul class="navis">
+                        <li class="navi"><a href="#home">Home</a></li>
+                        <li class="navi"><a href="#resume">Resume</a></li>
+                        <!-- <li class="navi"><a href="#projects">Projects</a></li> -->
+                        <li class="navi"><a href="#activities">Activities</a></li>
+                    </ul>
+                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                        <span class="theme-toggle-slider"></span>
+                    </button>
+                </div>
             </nav>
         </div>
 
@@ -33,16 +38,15 @@
         </header>
         
         <div class="counter-wrapper">
-             <!-- <a href='http://www.freevisitorcounters.com'>at Freevisitorcounters.com</a>  -->
-            <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=fb50b69537a606ac9e995dac0630b44ac3aedebe'></script>
-            <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1446704/t/2"></script>
+            <a href='https://www.free-counters.org/'>Free-Counters.org</a> <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=8baaca595d664098c37ecfbf6af2da14da37def2'></script>
+            <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1458017/t/0"></script>
         </div>
         
         <!-- Home Section -->
         <section id="home" class="home-section">
             <section class="container">
                 <div class="index image">
-                    <img src="michaelzuo.PNG" alt="Picture of Michael Z" class="rectangleimage">
+                    <img src="michaelzuo.jpg" alt="Picture of Michael Z" class="rectangleimage">
                 </div>
                 <section class="index right">
                     <div class="topbox">
@@ -197,14 +201,14 @@
             </div>
         </section>
         
-        <div class="counter-wrapper">
+        <!-- <div class="counter-wrapper">
             <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=efd5ddc61ac2b4fa11d8171481b5a0ade36b94ee'></script>
 <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1446706/t/4"></script>
-        </div>
+        </div> -->
 
         <!-- Footer -->
         <nav id="copyright">
-            <p id="copyright2">© 2024 Michael Zuo. All rights reserved.</p>
+            <p id="copyright2">© 2026 Michael Zuo. All rights reserved.</p>
         </nav>
 
 
@@ -222,6 +226,54 @@
                     }
                 });
             });
+
+            // Dark mode toggle functionality
+            const themeToggle = document.getElementById('themeToggle');
+            const htmlElement = document.documentElement;
+
+            // Check for saved theme preference or default to light mode
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            htmlElement.setAttribute('data-theme', currentTheme);
+
+            // Toggle theme function
+            function toggleTheme() {
+                const currentTheme = htmlElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                htmlElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+            }
+
+            // Add event listener to toggle button
+            themeToggle.addEventListener('click', toggleTheme);
+
+            // Global visitor counter using CountAPI
+            async function updateVisitCount() {
+                const namespace = 'michaelzuo-personalsite';
+                const key = 'visitor-count';
+                const apiUrl = `https://api.countapi.xyz/hit/${namespace}/${key}`;
+                
+                try {
+                    // Increment the counter and get the new value
+                    const response = await fetch(apiUrl);
+                    const data = await response.json();
+                    
+                    // Display the count
+                    const visitCountElement = document.getElementById('visitCount');
+                    if (visitCountElement && data.value !== undefined) {
+                        visitCountElement.textContent = data.value.toLocaleString();
+                    }
+                } catch (error) {
+                    console.error('Error updating visit count:', error);
+                    // Fallback: show a message or hide the counter
+                    const visitCountElement = document.getElementById('visitCount');
+                    if (visitCountElement) {
+                        visitCountElement.textContent = '...';
+                    }
+                }
+            }
+
+            // Update visit count when page loads
+            updateVisitCount();
         </script>
     </body> 
 </html>
