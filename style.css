@@ -7,6 +7,7 @@
 
 html {
     scroll-behavior: smooth;
+    scrollbar-gutter: stable;;
 }
 
 /* CSS Variables for Light Mode (default) */
@@ -81,11 +82,13 @@ body {
 
 .navtop-inner {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    max-width: 1200px;
+    width: 100%;
     margin: 0 auto;
     padding: 0 2rem;
+    gap: 1rem;
+    position: relative;
 }
 
 /* Dark Mode Toggle */
@@ -136,7 +139,9 @@ body {
 .navis {
     text-align: center;
     flex: 1;
-    padding: 0 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute;
 }
 
 .navis ul {
@@ -144,6 +149,7 @@ body {
     display: flex;
     justify-content: center;
     gap: 2rem;
+    margin: 0 auto;
 }
 
 .navis li {
@@ -162,6 +168,10 @@ body {
 .navis a:hover {
     background-color: var(--nav-hover-bg);
     color: var(--nav-hover-color);
+}
+
+.theme-toggle {
+    margin-left: auto;
 }
 
 /* Main Content Layout */
@@ -406,6 +416,22 @@ ol a:hover {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
     margin-top: 2rem;
+}
+
+.blog-meta {
+    color: var(--text-tertiary);
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+}
+
+.blog-link {
+    color: var(--link-color);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.blog-link:hover {
+    text-decoration: underline;
 }
 
 .activity-card {
