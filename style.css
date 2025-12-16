@@ -402,7 +402,7 @@ ol a:hover {
     font-size: 0.9rem;
 }
 
-/* Activities Section Styling */
+/* Favorites Section Styling */
 .intro-text {
     font-size: 1.2rem;
     color: var(--text-tertiary);
@@ -411,11 +411,10 @@ ol a:hover {
     font-style: italic;
 }
 
-.activities-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
+.favorites-section-main {
+    padding: 2rem;
+    margin: 2rem auto;
+    max-width: 1200px;
 }
 
 .blog-meta {
@@ -434,32 +433,6 @@ ol a:hover {
     text-decoration: underline;
 }
 
-.activity-card {
-    background: var(--activity-card-bg);
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px var(--card-shadow);
-    border-left: 4px solid var(--link-color);
-    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-}
-
-.activity-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px var(--card-shadow-hover);
-}
-
-.activity-card h3 {
-    color: var(--heading-color);
-    margin-bottom: 1rem;
-    font-size: 1.3rem;
-    font-weight: 600;
-}
-
-.activity-card p {
-    color: var(--text-secondary);
-    line-height: 1.6;
-    margin: 0;
-}
 
 /* Favorites Section Styling */
 .favorites-section {
@@ -541,10 +514,12 @@ ol a:hover {
     transform: scale(1.05);
 }
 
-/* Specific styling for XC2 image */
-.favorite-item:has(img[alt="Xenoblade Chronicles 2"]) .favorite-image img {
-    max-width: 85%;
-    max-height: 85%;
+/* Ensure xenoblade2 and smtnocturne images match other favorite images */
+.favorite-item:has(img[alt="Xenoblade Chronicles 2"]) .favorite-image img,
+.favorite-item:has(img[src*="xenoblade2"]) .favorite-image img,
+.favorite-item:has(img[src*="smtnocturne"]) .favorite-image img {
+    max-width: 100%;
+    max-height: 100%;
 }
 
 .favorite-item h4 {
@@ -630,22 +605,6 @@ ol a:hover {
         padding: 1.5rem;
     }
     
-    .activities-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-    
-    .activity-card {
-        padding: 1.5rem;
-    }
-    
-    .activity-card h3 {
-        font-size: 1.2rem;
-    }
-    
-    .activity-card p {
-        font-size: 0.95rem;
-    }
     
     .favorites-categories {
         grid-template-columns: 1fr;
