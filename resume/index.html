@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Michael Zuo's Resume</title>
+        <link rel="icon" type="image/jpeg" href="../jackfrostcomp.jpg">
+        <link rel="stylesheet" href="../style.css">
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="rowtop">
+            <nav class="navtop">
+                <div class="navtop-inner">
+                    <ul class="navis">
+                        <li class="navi"><a href="../">Home</a></li>
+                        <li class="navi"><a href="/resume">Resume</a></li>
+                        <!-- <li class="navi"><a href="../index.html#projects">Projects</a></li> -->
+                        <li class="navi"><a href="../favorites">Favorites</a></li>
+                        <li class="navi"><a href="../blog">Blog</a></li>
+                    </ul>
+                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                        <span class="theme-toggle-slider"></span>
+                    </button>
+                </div>
+            </nav>
+        </div>
+
+        <header class="site-header">
+            <div class="site-header-inner">
+                <h1 class="site-title">Michael's Resume</h1>
+            </div>
+        </header>
+
+        <section class="resume-section">
+            <div class="resume">
+                <iframe src="Michael_Zuo_Resume.pdf" width="100%" height="600px"></iframe>
+            </div>
+        </section>
+
+        <nav id="copyright">
+            <p id="copyright2">© 2026 Michael Zuo. All rights reserved.</p>
+        </nav>
+
+        <script>
+            // Dark mode toggle functionality
+            const themeToggle = document.getElementById('themeToggle');
+            const htmlElement = document.documentElement;
+
+            // Check for saved theme preference or default to light mode
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            htmlElement.setAttribute('data-theme', currentTheme);
+
+            // Toggle theme function
+            function toggleTheme() {
+                const currentTheme = htmlElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                htmlElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+            }
+
+            // Add event listener to toggle button
+            themeToggle.addEventListener('click', toggleTheme);
+
+            // Scroll to top when clicking nav links on current page
+            document.querySelectorAll('.navis a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    const currentPath = window.location.pathname;
+                    
+                    // Check if link points to current page
+                    if (href === '../' || href === '/' || href.includes('index.html')) {
+                        if (currentPath === '/' || currentPath.endsWith('index.html') || currentPath === '') {
+                            e.preventDefault();
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }
+                    } else if (href.includes('resume') || href === '/resume') {
+                        if (currentPath.includes('resume')) {
+                            e.preventDefault();
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }
+                    } else if (href.includes('favorites')) {
+                        if (currentPath.includes('favorites')) {
+                            e.preventDefault();
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }
+                    } else if (href.includes('blog')) {
+                        if (currentPath.includes('blog')) {
+                            e.preventDefault();
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>
+
