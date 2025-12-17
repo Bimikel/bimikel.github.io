@@ -285,6 +285,82 @@ p {
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* Courses Section Styling */
+.courses-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 1.5rem;
+}
+
+.course-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.column-title {
+    color: var(--heading-color);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-align: center;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border-color);
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.courses-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.course-item {
+    background-color: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px var(--card-shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    border: 1px solid var(--border-color);
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+.course-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px var(--card-shadow-hover);
+}
+
+.course-item h4 {
+    color: var(--heading-color);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    transition: color 0.3s ease;
+    text-decoration: none;
+}
+
+.course-item:hover h4 {
+    color: var(--link-color);
+}
+
+.course-code {
+    color: var(--link-color);
+    font-weight: 600;
+    font-size: 1rem;
+    margin: 0;
+    transition: color 0.3s ease;
+}
+
+.course-institution {
+    color: var(--text-tertiary);
+    font-size: 0.9rem;
+    margin: 0;
+    transition: color 0.3s ease;
+}
+
 /* Contact Info Styling */
 #contactinfo {
     padding-top: 0;
@@ -662,6 +738,23 @@ ol a:hover {
         height: 150px;
     }
     
+    .courses-columns {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .course-item {
+        padding: 1.25rem;
+    }
+    
+    .course-item h4 {
+        font-size: 1.1rem;
+    }
+    
+    .column-title {
+        font-size: 1.3rem;
+    }
+    
     .favorite-item h4 {
         font-size: 0.9rem;
         margin: 0.8rem 0 1.2rem 0;
@@ -794,6 +887,27 @@ ol a:hover {
     
     .resume iframe {
         height: 500px;
+    }
+    
+    .courses-columns {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .course-item {
+        padding: 1rem;
+    }
+    
+    .course-item h4 {
+        font-size: 1rem;
+    }
+    
+    .course-code {
+        font-size: 0.9rem;
+    }
+    
+    .column-title {
+        font-size: 1.2rem;
     }
 }
 

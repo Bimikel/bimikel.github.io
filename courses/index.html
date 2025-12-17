@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Michael Zuo's Courses</title>
+        <link rel="icon" type="image/jpeg" href="../jackfrostcomp.jpg">
+        <link rel="stylesheet" href="../style.css">
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="rowtop">
+            <nav class="navtop">
+                <div class="navtop-inner">
+                    <ul class="navis">
+                        <li class="navi"><a href="../">Home</a></li>
+                        <li class="navi"><a href="../resume">Resume</a></li>
+                        <!-- <li class="navi"><a href="../index.html#projects">Projects</a></li> -->
+                        <li class="navi"><a href="../courses">Courses</a></li>
+                        <li class="navi"><a href="../favorites">Favorites</a></li>
+                        <li class="navi"><a href="../blog">Blog</a></li>
+                    </ul>
+                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                        <span class="theme-toggle-slider"></span>
+                    </button>
+                </div>
+            </nav>
+        </div>
+
+        <header class="site-header">
+            <div class="site-header-inner">
+                <h1 class="site-title">Courses</h1>
+                <p class="favorites-intro">A collection of courses I've taken and completed.</p>
+            </div>
+        </header>
+
+        <section class="section2">
+            <h2>Course List</h2>
+            <div class="courses-columns">
+                <div class="course-column">
+                    <h3 class="column-title">Computer Science</h3>
+                    <div class="courses-list">
+                        <a href="#" data-course-num="1332" target="_blank" rel="noopener noreferrer" class="course-item cs-course-link">
+                            <h4>Data Structures and Algorithms</h4>
+                            <p class="course-code">CS 1332</p>
+                        </a>
+                        <a href="#" data-course-num="2200" target="_blank" rel="noopener noreferrer" class="course-item cs-course-link">
+                            <h4>Systems and Networks</h4>
+                            <p class="course-code">CS 2200</p>
+                        </a>
+                        <a href="#" data-course-num="3251" target="_blank" rel="noopener noreferrer" class="course-item cs-course-link">
+                            <h4>Computer Networking</h4>
+                            <p class="course-code">CS 3251</p>
+                        </a>
+                        <a href="#" data-course-num="3511" target="_blank" rel="noopener noreferrer" class="course-item cs-course-link">
+                            <h4>Honors Design and Analysis of Algorithms</h4>
+                            <p class="course-code">CS 3511</p>
+                        </a>
+                        <a href="#" data-course-num="3600" target="_blank" rel="noopener noreferrer" class="course-item cs-course-link">
+                            <h4>Introuction to Artificial Intelligence</h4>
+                            <p class="course-code">CS 3600</p>
+                        </a>
+                        <a href="#" data-course-num="4400" target="_blank" rel="noopener noreferrer" class="course-item cs-course-link">
+                            <h4>Database Systems</h4>
+                            <p class="course-code">CS 4400</p>
+                        </a>
+                        <a href="#" data-course-num="4641" target="_blank" rel="noopener noreferrer" class="course-item cs-course-link">
+                            <h4>Machine Learning</h4>
+                            <p class="course-code">CS 4641</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="course-column">
+                    <h3 class="column-title">Mathematics</h3>
+                    <div class="courses-list">
+                        <a href="https://math.gatech.edu/courses/math/4317" target="_blank" rel="noopener noreferrer" class="course-item">
+                            <h4>Analysis I</h4>
+                            <p class="course-code">MATH 4317</p>
+                        </a>
+                        <a href="https://math.gatech.edu/courses/math/3235" target="_blank" rel="noopener noreferrer" class="course-item">
+                            <h4>Probability Theory</h4>
+                            <p class="course-code">MATH 3235</p>
+                        </a>
+                        <a href="https://math.gatech.edu/courses/math/3236" target="_blank" rel="noopener noreferrer" class="course-item">
+                            <h4>Statistical Theory</h4>
+                            <p class="course-code">MATH 3236</p>
+                        </a>
+                        <a href="https://math.gatech.edu/courses/math/4221" target="_blank" rel="noopener noreferrer" class="course-item">
+                            <h4>Stochastic Processes</h4>
+                            <p class="course-code">MATH 4221</p>
+                        </a>
+                        <a href="https://math.gatech.edu/courses/math/3406" target="_blank" rel="noopener noreferrer" class="course-item">
+                            <h4>Linear Algebra I & II</h4>
+                            <p class="course-code">MATH 3406</p>
+                        </a>
+                        <a href="https://math.gatech.edu/courses/math/4210" target="_blank" rel="noopener noreferrer" class="course-item">
+                            <h4>Math Foundations of Data Science</h4>
+                            <p class="course-code">MATH 4210</p>
+                        </a>
+                        <a href="https://math.gatech.edu/courses/math/4032" target="_blank" rel="noopener noreferrer" class="course-item">
+                            <h4>Combinatorial Analysis</h4>
+                            <p class="course-code">MATH 4032</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <nav id="copyright">
+            <p id="copyright2">© 2026 Michael Zuo. All rights reserved.</p>
+        </nav>
+
+        <script>
+            // Dark mode toggle functionality
+            const themeToggle = document.getElementById('themeToggle');
+            const htmlElement = document.documentElement;
+
+            // Check for saved theme preference or default to light mode
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            htmlElement.setAttribute('data-theme', currentTheme);
+
+            // Toggle theme function
+            function toggleTheme() {
+                const currentTheme = htmlElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                htmlElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+            }
+
+            // Add event listener to toggle button
+            themeToggle.addEventListener('click', toggleTheme);
+
+            // Update CS course links with current year
+            const currentYear = new Date().getFullYear();
+            const csCourseLinks = document.querySelectorAll('.cs-course-link');
+            csCourseLinks.forEach(link => {
+                const courseNum = link.getAttribute('data-course-num');
+                link.href = `https://oscar.gatech.edu/pls/bprod/bwckctlg.p_disp_course_detail?cat_term_in=${currentYear}&subj_code_in=CS&crse_numb_in=${courseNum}`;
+            });
+
+            // Scroll to top when clicking nav links on current page
+            document.querySelectorAll('.navis a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    const currentPath = window.location.pathname;
+                    
+                    // Check if link points to current page
+                    if (href === '../' || href === '/' || href.includes('index.html')) {
+                        if (currentPath === '/' || currentPath.endsWith('index.html') || currentPath === '') {
+                            e.preventDefault();
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }
+                    } else if (href.includes('resume')) {
+                        if (currentPath.includes('resume')) {
+                            e.preventDefault();
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }
+                    } else if (href.includes('favorites')) {
+                        if (currentPath.includes('favorites')) {
+                            e.preventDefault();
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }
+                    } else if (href.includes('blog') || href === '/blog') {
+                        if (currentPath.includes('blog')) {
+                            e.preventDefault();
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }
+                    } else if (href.includes('courses')) {
+                        if (currentPath.includes('courses')) {
+                            e.preventDefault();
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>
+

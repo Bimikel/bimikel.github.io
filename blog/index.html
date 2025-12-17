@@ -16,6 +16,7 @@
                         <li class="navi"><a href="../">Home</a></li>
                         <li class="navi"><a href="../resume">Resume</a></li>
                         <!-- <li class="navi"><a href="../index.html#projects">Projects</a></li> -->
+                        <li class="navi"><a href="../courses">Courses</a></li>
                         <li class="navi"><a href="../favorites">Favorites</a></li>
                         <li class="navi"><a href="/blog">Blog</a></li>
                     </ul>
@@ -88,6 +89,11 @@
                         }
                     } else if (href.includes('blog') || href === '/blog') {
                         if (currentPath.includes('blog')) {
+                            e.preventDefault();
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }
+                    } else if (href.includes('courses')) {
+                        if (currentPath.includes('courses')) {
                             e.preventDefault();
                             window.scrollTo({ top: 0, behavior: 'smooth' });
                         }
