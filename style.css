@@ -872,3 +872,58 @@ button:hover {
 a:hover {
     text-decoration: underline;
 }
+
+/* --- FORCE NAV TO STAY ONE ROW (MOBILE + DESKTOP) --- */
+
+/* Your nav list is the UL itself: <ul class="navis"> ... */
+ul.navis {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: nowrap;          /* <— keeps one row */
+    white-space: nowrap;
+  }
+  
+  /* Keep the toggle pinned to the right on ALL screen sizes */
+  .navtop-inner {
+    position: relative;
+  }
+  
+  .theme-toggle {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  /* Mobile tweaks: reduce spacing/font so everything fits */
+  @media (max-width: 768px) {
+    .navtop-inner {
+      flex-direction: row;      /* <— overrides your column layout */
+    }
+  
+    ul.navis {
+      gap: 1rem;
+    }
+  
+    ul.navis a {
+      padding: 0.35rem 0.6rem;
+      font-size: 0.9rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    ul.navis {
+      gap: 0.6rem;
+    }
+  
+    ul.navis a {
+      padding: 0.3rem 0.5rem;
+      font-size: 0.85rem;
+    }
+  }
