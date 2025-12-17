@@ -927,3 +927,10 @@ ul.navis {
       font-size: 0.85rem;
     }
   }
+
+  @media (max-width: 420px) {
+    ul.navis {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
