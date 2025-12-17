@@ -452,7 +452,7 @@ ol a:hover {
 
 .favorites-categories {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 3rem;
     margin-top: 2rem;
 }
@@ -473,6 +473,16 @@ ol a:hover {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1.5rem;
     margin-top: 1rem;
+}
+
+.music-embed-wrapper {
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Music section grid - 2 columns for 2 rows layout */
+.music-grid {
+    grid-template-columns: repeat(2, 1fr);
 }
 
 .favorite-item {
