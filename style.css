@@ -168,6 +168,11 @@ body {
     color: var(--nav-hover-color);
 }
 
+.navis a.active {
+    font-weight: 600;
+    text-decoration: underline;
+}
+
 .theme-toggle {
     position: absolute;
     right: 2rem;

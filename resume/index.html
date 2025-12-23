@@ -63,6 +63,60 @@
             // Add event listener to toggle button
             themeToggle.addEventListener('click', toggleTheme);
 
+            // Highlight current page in navigation
+            function highlightCurrentPage() {
+                const currentPath = window.location.pathname;
+                const navLinks = document.querySelectorAll('.navis a');
+                
+                // Determine which page we're actually on
+                let currentPage = 'home';
+                if (currentPath.includes('/resume')) {
+                    currentPage = 'resume';
+                } else if (currentPath.includes('/courses')) {
+                    currentPage = 'courses';
+                } else if (currentPath.includes('/favorites')) {
+                    currentPage = 'favorites';
+                } else if (currentPath.includes('/blog')) {
+                    currentPage = 'blog';
+                } else if (currentPath === '/' || currentPath.endsWith('index.html') || currentPath === '' || currentPath.endsWith('/')) {
+                    currentPage = 'home';
+                }
+                
+                navLinks.forEach(link => {
+                    const href = link.getAttribute('href');
+                    let isActive = false;
+                    
+                    // Normalize href to determine which page it points to
+                    const normalizedHref = href.replace(/^\.\.\//, '').replace(/^\//, '').replace(/\/$/, '').replace(/index\.html$/, '');
+                    
+                    if (currentPage === 'home') {
+                        // On home page - only home link should be active
+                        isActive = normalizedHref === '' || normalizedHref === 'index.html' || normalizedHref === '#home';
+                    } else if (currentPage === 'resume') {
+                        // On resume page - only resume link should be active
+                        isActive = normalizedHref.includes('resume');
+                    } else if (currentPage === 'courses') {
+                        // On courses page - only courses link should be active
+                        isActive = normalizedHref.includes('courses');
+                    } else if (currentPage === 'favorites') {
+                        // On favorites page - only favorites link should be active
+                        isActive = normalizedHref.includes('favorites');
+                    } else if (currentPage === 'blog') {
+                        // On blog page - only blog link should be active
+                        isActive = normalizedHref.includes('blog');
+                    }
+                    
+                    if (isActive) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                });
+            }
+            
+            // Call on page load
+            highlightCurrentPage();
+
             // Scroll to top when clicking nav links on current page
             document.querySelectorAll('.navis a').forEach(link => {
                 link.addEventListener('click', function(e) {
