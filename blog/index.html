@@ -7,6 +7,7 @@
         <link rel="icon" type="image/jpeg" href="../jackfrostcomp.jpg">
         <link rel="stylesheet" href="../style.css">
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     </head>
     <body>
         <div class="rowtop">
@@ -36,35 +37,8 @@
 
         <section class="section2">
             <h2>Recent Posts</h2>
-            <div class="blog-posts">
-                <!-- Blog Post Template - Copy this block to add a new post -->
-                <!--
-                <article class="blog-post">
-                    <h3 class="blog-title">
-                        <a href="#" class="blog-link">Post Title</a>
-                    </h3>
-                    <p class="blog-meta">Published on January 1, 2026</p>
-                    <p class="blog-excerpt">This is a brief excerpt or description of the blog post. It gives readers a preview of what the post is about...</p>
-                </article>
-                -->
-                
-                <article class="blog-post">
-                    <h3 class="blog-title">
-                        <a href="#" class="blog-link">Switching from Windows to Ubuntu Linux</a>
-                    </h3>
-                    <p class="blog-meta">December 31, 2025</p>
-                    <p class="blog-excerpt">
-                        I was feeling bored during this past Winter Break and wanted to try something new with my laptop. I’ve seen so many cool Linux customizations and keep hearing how awesome Arch Linux is from my smartest peers. While Arch is way beyond my scope, I do think a switch to a Linux OS is a necessary step for me to take as a “true” CS major. Thus, I decided to choose Ubuntu Linux as it was one of the most popular distros with lots of resources online.
-
-Looking back, it’s nice to see a bunch of color and options available with Windows. Windows OS was also necessary for some classes at Georgia Tech such as Computer Networking (CS 3251) and Digital Design Lab (ECE 2031) which is why I’ve heavily debated about making this switch for a long time. But after recent experiences, I’ve realized that I've stayed in my comfort zone for way too long and need to take bolder steps like this. These steps might be covered with thorns, but the lessons gained along the way are invaluable. 
-
-One major lesson I’ve taken away is to always backup your files especially when you’re doing anything related to the computer kernel or system. Thankfully most of my most important files are on Overleaf and Google Storage so this switch isn’t hugely impactful. But I was being a bit careless when making this switch and do regret not having a backup state for my Windows files.
-
-Another is taking full advantage of ChatGPT to double check work. Using ChatGPT Plus makes it easier than ever to try out this switch. It’s not always 100% accurate but its a huge life-saver at streamlining this complex process. It’s ability to take huge amounts of forum answers online and summarize them in an easy-to-follow format makes it surprisingly simple to go from setting up Linux to customizing my terminal layout to have special arrows or extra text that specify what version of Java, Python, or Git that my current folder is using. I’ve even been able to instead a Windows 10 Virtual Machine in case a future class might require me to use Windows OS for a specific program.
-
-Overall, using Linux has been a lot of fun. I definitely can’t imagine going back to Windows anytime soon with their clunky design choices and the confusing nature of WSL. This also explains why people and big tech companies like to use MacOS and Macbooks. It’s so much easier to be in the Linux format rather than going through many other hurdles to emulate the situation. If Linux doesn’t sound good enough, maybe the fact that it makes C/C++ development feel much smoother will. While Windows requires many extra instructions and programs to compile C/C++ files that drove me insane, Linux just needed some sudo commands and I was good to go. Perhaps I can get more familiar with Vim to become an even stronger programmer.
-                    </p>
-                </article>
+            <div class="blog-posts" id="blog-posts">
+                <p>Loading posts...</p>
             </div>
         </section>
 
@@ -145,6 +119,91 @@ Overall, using Linux has been a lot of fun. I definitely can’t imagine going b
             
             // Call on page load
             highlightCurrentPage();
+
+            // Blog posts configuration - add new posts here
+            const blogPosts = [
+                {
+                    file: 'posts/switching-to-ubuntu.md',
+                    slug: 'switching-to-ubuntu'
+                }
+                // Add more posts here:
+                // { file: 'posts/your-post-name.md', slug: 'your-post-name' }
+            ];
+
+            // Load and render blog posts from markdown files
+            async function loadBlogPosts() {
+                const postsContainer = document.getElementById('blog-posts');
+                postsContainer.innerHTML = '';
+
+                for (const post of blogPosts) {
+                    try {
+                        const response = await fetch(post.file);
+                        if (!response.ok) {
+                            console.error(`Failed to load ${post.file}`);
+                            continue;
+                        }
+                        
+                        const markdown = await response.text();
+                        
+                        // Parse markdown to extract title, date, and content
+                        const lines = markdown.split('\n');
+                        let title = '';
+                        let date = '';
+                        let content = '';
+                        let inContent = false;
+                        
+                        for (let i = 0; i < lines.length; i++) {
+                            const line = lines[i].trim();
+                            
+                            // Extract title (first # heading)
+                            if (!title && line.startsWith('# ')) {
+                                title = line.substring(2).trim();
+                                continue;
+                            }
+                            
+                            // Extract date (line starting with **Published:**)
+                            if (!date && line.startsWith('**Published:**')) {
+                                date = line.replace('**Published:**', '').trim();
+                                inContent = true;
+                                continue;
+                            }
+                            
+                            // Collect content (everything after date)
+                            if (inContent || (!title && !date)) {
+                                content += lines[i] + '\n';
+                            }
+                        }
+                        
+                        // Generate excerpt (first 200 characters)
+                        const excerpt = content.replace(/\n/g, ' ').substring(0, 200).trim() + '...';
+                        
+                        // Render markdown content
+                        const renderedContent = marked.parse(content);
+                        
+                        // Create blog post element
+                        const postElement = document.createElement('article');
+                        postElement.className = 'blog-post';
+                        postElement.innerHTML = `
+                            <h3 class="blog-title">
+                                <a href="post.html?slug=${post.slug}" class="blog-link">${title}</a>
+                            </h3>
+                            <p class="blog-meta">${date}</p>
+                            <div class="blog-excerpt">${excerpt}</div>
+                        `;
+                        
+                        postsContainer.appendChild(postElement);
+                    } catch (error) {
+                        console.error(`Error loading ${post.file}:`, error);
+                    }
+                }
+                
+                if (postsContainer.children.length === 0) {
+                    postsContainer.innerHTML = '<p>No posts found.</p>';
+                }
+            }
+
+            // Load posts on page load
+            loadBlogPosts();
 
             // Scroll to top when clicking nav links on current page
             document.querySelectorAll('.navis a').forEach(link => {

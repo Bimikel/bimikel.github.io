@@ -557,6 +557,87 @@ ol a:hover {
     white-space: pre-line;
 }
 
+.blog-content {
+    color: var(--text-color);
+    line-height: 1.8;
+}
+
+.blog-content h1,
+.blog-content h2,
+.blog-content h3,
+.blog-content h4 {
+    color: var(--heading-color);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.blog-content h1 {
+    font-size: 2rem;
+}
+
+.blog-content h2 {
+    font-size: 1.75rem;
+}
+
+.blog-content h3 {
+    font-size: 1.5rem;
+}
+
+.blog-content p {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.blog-content ul,
+.blog-content ol {
+    margin-bottom: 1.5rem;
+    padding-left: 2rem;
+}
+
+.blog-content li {
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.blog-content code {
+    background-color: var(--nav-hover-bg);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+}
+
+.blog-content pre {
+    background-color: var(--nav-hover-bg);
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+}
+
+.blog-content pre code {
+    background-color: transparent;
+    padding: 0;
+}
+
+.blog-content a {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+.blog-content a:hover {
+    text-decoration: underline;
+}
+
+.blog-content blockquote {
+    border-left: 4px solid var(--link-color);
+    padding-left: 1rem;
+    margin-left: 0;
+    margin-bottom: 1.5rem;
+    color: var(--text-tertiary);
+    font-style: italic;
+}
+
 
 /* Favorites Section Styling */
 .favorites-section {
