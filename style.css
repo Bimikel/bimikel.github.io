@@ -515,6 +515,48 @@ ol a:hover {
     text-decoration: underline;
 }
 
+.blog-posts {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: 1.5rem;
+}
+
+.blog-post {
+    background-color: var(--card-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px var(--card-shadow);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--border-color);
+}
+
+.blog-post:hover {
+    box-shadow: 0 6px 20px var(--card-shadow-hover);
+}
+
+.blog-title {
+    margin-bottom: 0.5rem;
+}
+
+.blog-title a {
+    color: var(--heading-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.blog-title a:hover {
+    color: var(--link-color);
+}
+
+.blog-excerpt {
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-top: 1rem;
+    margin-bottom: 0;
+    white-space: pre-line;
+}
+
 
 /* Favorites Section Styling */
 .favorites-section {
