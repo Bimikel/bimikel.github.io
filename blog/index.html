@@ -6,6 +6,7 @@
         <title>Michael Zuo's Blog</title>
         <link rel="icon" type="image/jpeg" href="../jackfrostcomp.jpg">
         <link rel="stylesheet" href="../style.css">
+        <script src="../script.js"></script>
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     </head>
@@ -47,79 +48,6 @@
         </nav>
 
         <script>
-            // Dark mode toggle functionality
-            const themeToggle = document.getElementById('themeToggle');
-            const htmlElement = document.documentElement;
-
-            // Check for saved theme preference or default to light mode
-            const currentTheme = localStorage.getItem('theme') || 'light';
-            htmlElement.setAttribute('data-theme', currentTheme);
-
-            // Toggle theme function
-            function toggleTheme() {
-                const currentTheme = htmlElement.getAttribute('data-theme');
-                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-                htmlElement.setAttribute('data-theme', newTheme);
-                localStorage.setItem('theme', newTheme);
-            }
-
-            // Add event listener to toggle button
-            themeToggle.addEventListener('click', toggleTheme);
-
-            // Highlight current page in navigation
-            function highlightCurrentPage() {
-                const currentPath = window.location.pathname;
-                const navLinks = document.querySelectorAll('.navis a');
-                
-                // Determine which page we're actually on
-                let currentPage = 'home';
-                if (currentPath.includes('/resume')) {
-                    currentPage = 'resume';
-                } else if (currentPath.includes('/courses')) {
-                    currentPage = 'courses';
-                } else if (currentPath.includes('/favorites')) {
-                    currentPage = 'favorites';
-                } else if (currentPath.includes('/blog')) {
-                    currentPage = 'blog';
-                } else if (currentPath === '/' || currentPath.endsWith('index.html') || currentPath === '' || currentPath.endsWith('/')) {
-                    currentPage = 'home';
-                }
-                
-                navLinks.forEach(link => {
-                    const href = link.getAttribute('href');
-                    let isActive = false;
-                    
-                    // Normalize href to determine which page it points to
-                    const normalizedHref = href.replace(/^\.\.\//, '').replace(/^\//, '').replace(/\/$/, '').replace(/index\.html$/, '');
-                    
-                    if (currentPage === 'home') {
-                        // On home page - only home link should be active
-                        isActive = normalizedHref === '' || normalizedHref === 'index.html' || normalizedHref === '#home';
-                    } else if (currentPage === 'resume') {
-                        // On resume page - only resume link should be active
-                        isActive = normalizedHref.includes('resume');
-                    } else if (currentPage === 'courses') {
-                        // On courses page - only courses link should be active
-                        isActive = normalizedHref.includes('courses');
-                    } else if (currentPage === 'favorites') {
-                        // On favorites page - only favorites link should be active
-                        isActive = normalizedHref.includes('favorites');
-                    } else if (currentPage === 'blog') {
-                        // On blog page - only blog link should be active
-                        isActive = normalizedHref.includes('blog');
-                    }
-                    
-                    if (isActive) {
-                        link.classList.add('active');
-                    } else {
-                        link.classList.remove('active');
-                    }
-                });
-            }
-            
-            // Call on page load
-            highlightCurrentPage();
-
             // Blog posts configuration - add new posts here
             const blogPosts = [
                 {
@@ -205,41 +133,6 @@
             // Load posts on page load
             loadBlogPosts();
 
-            // Scroll to top when clicking nav links on current page
-            document.querySelectorAll('.navis a').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    const href = this.getAttribute('href');
-                    const currentPath = window.location.pathname;
-                    
-                    // Check if link points to current page
-                    if (href === '../' || href === '/' || href.includes('index.html')) {
-                        if (currentPath === '/' || currentPath.endsWith('index.html') || currentPath === '') {
-                            e.preventDefault();
-                            window.scrollTo({ top: 0, behavior: 'smooth' });
-                        }
-                    } else if (href.includes('resume')) {
-                        if (currentPath.includes('resume')) {
-                            e.preventDefault();
-                            window.scrollTo({ top: 0, behavior: 'smooth' });
-                        }
-                    } else if (href.includes('favorites')) {
-                        if (currentPath.includes('favorites')) {
-                            e.preventDefault();
-                            window.scrollTo({ top: 0, behavior: 'smooth' });
-                        }
-                    } else if (href.includes('blog') || href === '/blog') {
-                        if (currentPath.includes('blog')) {
-                            e.preventDefault();
-                            window.scrollTo({ top: 0, behavior: 'smooth' });
-                        }
-                    } else if (href.includes('courses')) {
-                        if (currentPath.includes('courses')) {
-                            e.preventDefault();
-                            window.scrollTo({ top: 0, behavior: 'smooth' });
-                        }
-                    }
-                });
-            });
         </script>
     </body>
 </html>
