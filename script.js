@@ -22,7 +22,7 @@
 // ---- Visit counter (shown on the home page) ----
 // Talks to the Cloudflare Worker in counter/. Paste its URL here after deploying,
 // e.g. 'https://site-counter.yourname.workers.dev'. Empty = counter stays hidden.
-const COUNTER_URL = '';
+const COUNTER_URL = 'https://site-counter.bimikel.workers.dev';
 
 document.addEventListener('DOMContentLoaded', function () {
     const el = document.getElementById('visitCount');
