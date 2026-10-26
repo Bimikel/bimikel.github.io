@@ -1,0 +1,15 @@
+# Cloudflare deploy settings for the visitor counter.
+# Deploy from this folder with:  npx wrangler deploy
+name = "site-counter"
+main = "src/index.js"
+compatibility_date = "2025-06-01"
+
+[[durable_objects.bindings]]
+name = "COUNTER"
+class_name = "Counter"
+
+# Creates the Counter's storage on first deploy. SQLite-backed storage
+# is what Cloudflare's free plan supports.
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["Counter"]

@@ -1,4 +1,4 @@
-// Shared behavior for every page: dark mode + nav highlighting.
+// Shared behavior for every page: analytics, visit counter, dark mode, nav highlighting.
 // Loaded in <head> so the theme is set before the page paints (no light-mode flash).
 
 // ---- Visitor tracking (Google Analytics) ----
@@ -18,6 +18,45 @@
     gtag('js', new Date());
     gtag('config', GA_ID);
 })();
+
+// ---- Visit counter (shown on the home page) ----
+// Talks to the Cloudflare Worker in counter/. Paste its URL here after deploying,
+// e.g. 'https://site-counter.yourname.workers.dev'. Empty = counter stays hidden.
+const COUNTER_URL = '';
+
+document.addEventListener('DOMContentLoaded', function () {
+    const el = document.getElementById('visitCount');
+    if (!el || !COUNTER_URL) return;
+
+    // Count one "visit" per browser per 30 minutes, so refreshing or
+    // clicking around the site doesn't inflate the number.
+    const WINDOW_MS = 30 * 60 * 1000;
+    let last = 0;
+    try { last = Number(localStorage.getItem('visitCountedAt')) || 0; } catch (e) {}
+    const isNewVisit = Date.now() - last > WINDOW_MS;
+
+    // Testing on your own computer only reads the count, unless you're
+    // also running the Worker locally (npx wrangler dev).
+    const isLocal = function (host) { return /^(localhost|127\.0\.0\.1)$/.test(host); };
+    const testingLocally = isLocal(location.hostname) && !isLocal(new URL(COUNTER_URL).hostname);
+    const shouldCount = isNewVisit && !testingLocally;
+
+    fetch(COUNTER_URL + (shouldCount ? '/hit' : '/count'), {
+        method: shouldCount ? 'POST' : 'GET',
+        signal: AbortSignal.timeout(4000),
+    })
+        .then(function (res) { return res.ok ? res.json() : Promise.reject(res.status); })
+        .then(function (data) {
+            if (shouldCount) {
+                try { localStorage.setItem('visitCountedAt', String(Date.now())); } catch (e) {}
+            }
+            el.textContent = '👀 ' + data.views.toLocaleString('en-US') + ' visits';
+            el.hidden = false;
+        })
+        .catch(function () {
+            // Blocked or offline: leave the counter hidden rather than show something broken.
+        });
+});
 
 (function () {
     const root = document.documentElement;

@@ -452,6 +452,15 @@ ol a:hover {
     text-decoration: underline;
 }
 
+/* Visit counter under the contact icons */
+.visit-count {
+    text-align: center;
+    color: var(--text-tertiary);
+    font-size: 0.95rem;
+    margin: 1.5rem 0 0;
+    font-variant-numeric: tabular-nums;
+}
+
 /* Footer */
 #copyright {
     background-color: var(--footer-bg);
