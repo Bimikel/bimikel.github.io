@@ -17,6 +17,6 @@ https://bimikel.github.io/
 
 ## Tech
 
-- HTML, CSS, a small bit of vanilla JS (theme toggle, nav highlighting, and the markdown blog)
+- HTML, CSS, a small bit of vanilla JS (theme toggle and visitor counter)
 - Served via GitHub Pages
 
