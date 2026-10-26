@@ -26,6 +26,7 @@ const COUNTER_URL = 'https://site-counter.bimikel.workers.dev';
 
 document.addEventListener('DOMContentLoaded', function () {
     const el = document.getElementById('visitCount');
+    const box = document.getElementById('visitBox') || el;
     if (!el || !COUNTER_URL) return;
 
     // Count one "visit" per browser per 30 minutes, so refreshing or
@@ -50,8 +51,9 @@ document.addEventListener('DOMContentLoaded', function () {
             if (shouldCount) {
                 try { localStorage.setItem('visitCountedAt', String(Date.now())); } catch (e) {}
             }
-            el.textContent = '👀 ' + data.views.toLocaleString('en-US') + ' visits';
-            el.hidden = false;
+            const n = data.views;
+            el.textContent = '👀 ' + n.toLocaleString('en-US') + (n === 1 ? ' visit' : ' visits');
+            box.hidden = false;
         })
         .catch(function () {
             // Blocked or offline: leave the counter hidden rather than show something broken.

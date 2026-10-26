@@ -444,12 +444,18 @@ ol a:hover {
     text-decoration: underline;
 }
 
-/* Visit counter under the contact icons */
+/* Visit counter: its own small box below Contact Info */
+.visit-box {
+    padding: 1.25rem 2rem;
+    margin-top: -0.75rem; /* sit a little closer to the contact box above */
+}
+
 .visit-count {
     text-align: center;
-    color: var(--text-tertiary);
-    font-size: 0.95rem;
-    margin: 1.5rem 0 0;
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    font-weight: 500;
+    margin: 0;
     font-variant-numeric: tabular-nums;
 }
 
