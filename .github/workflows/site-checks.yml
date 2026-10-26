@@ -1,0 +1,23 @@
+# Runs on every push and pull request. If something breaks, GitHub marks
+# the commit with a red X and emails you; the log shows the exact line.
+name: Site checks
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Validate HTML (rules in .htmlvalidate.json)
+        run: npx --yes html-validate@9 "**/*.html"
+
+      - name: Check for broken local links and images
+        run: python3 .github/scripts/check_links.py

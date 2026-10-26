@@ -7,11 +7,10 @@
         <link rel="icon" type="image/jpeg" href="../jackfrostcomp.jpg">
         <link rel="stylesheet" href="../style.css">
         <script src="../script.js"></script>
-        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
     </head>
     <body>
         <div class="rowtop">
-            <nav class="navtop">
+            <nav class="navtop" aria-label="Main">
                 <div class="navtop-inner">
                     <ul class="navis">
                         <li class="navi"><a href="../">Home</a></li>
@@ -21,7 +20,7 @@
                         <li class="navi"><a href="../favorites">Favorites</a></li>
                         <li class="navi"><a href="../blog">Blog</a></li>
                     </ul>
-                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
                         <span class="theme-toggle-slider"></span>
                     </button>
                 </div>
@@ -58,7 +57,7 @@
                             <p class="course-code">CS 3511</p>
                         </a>
                         <a href="#" data-course-num="3600" target="_blank" rel="noopener noreferrer" class="course-item cs-course-link">
-                            <h4>Introuction to Artificial Intelligence</h4>
+                            <h4>Introduction to Artificial Intelligence</h4>
                             <p class="course-code">CS 3600</p>
                         </a>
                         <a href="#" data-course-num="4400" target="_blank" rel="noopener noreferrer" class="course-item cs-course-link">
@@ -91,7 +90,7 @@
                             <p class="course-code">MATH 4221</p>
                         </a>
                         <a href="https://math.gatech.edu/courses/math/3406" target="_blank" rel="noopener noreferrer" class="course-item">
-                            <h4>Linear Algebra I & II</h4>
+                            <h4>Linear Algebra I &amp; II</h4>
                             <p class="course-code">MATH 3406</p>
                         </a>
                         <a href="https://math.gatech.edu/courses/math/4210" target="_blank" rel="noopener noreferrer" class="course-item">
@@ -107,9 +106,9 @@
             </div>
         </section>
 
-        <nav id="copyright">
+        <footer id="copyright">
             <p id="copyright2">© 2026 Michael Zuo. All rights reserved.</p>
-        </nav>
+        </footer>
 
         <script>
             // Update CS course links with current year

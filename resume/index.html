@@ -7,11 +7,10 @@
         <link rel="icon" type="image/jpeg" href="../jackfrostcomp.jpg">
         <link rel="stylesheet" href="../style.css">
         <script src="../script.js"></script>
-        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
     </head>
     <body>
         <div class="rowtop">
-            <nav class="navtop">
+            <nav class="navtop" aria-label="Main">
                 <div class="navtop-inner">
                     <ul class="navis">
                         <li class="navi"><a href="../">Home</a></li>
@@ -21,7 +20,7 @@
                         <li class="navi"><a href="../favorites">Favorites</a></li>
                         <li class="navi"><a href="../blog">Blog</a></li>
                     </ul>
-                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
                         <span class="theme-toggle-slider"></span>
                     </button>
                 </div>
@@ -36,13 +35,13 @@
 
         <section class="resume-section">
             <div class="resume">
-                <iframe src="Michael_Zuo_Resume.pdf" width="100%" height="600px"></iframe>
+                <iframe title="Michael Zuo resume (PDF)" src="Michael_Zuo_Resume.pdf" width="100%" height="600px"></iframe>
             </div>
         </section>
 
-        <nav id="copyright">
+        <footer id="copyright">
             <p id="copyright2">© 2026 Michael Zuo. All rights reserved.</p>
-        </nav>
+        </footer>
 
     </body>
 </html>

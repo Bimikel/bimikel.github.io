@@ -8,13 +8,11 @@
     <link rel="icon" type="image/jpeg" href="../jackfrostcomp.jpg">
     <link rel="stylesheet" href="../style.css">
     <script src="../script.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap"
-        rel="stylesheet">
 </head>
 
 <body>
     <div class="rowtop">
-        <nav class="navtop">
+        <nav class="navtop" aria-label="Main">
             <div class="navtop-inner">
                 <ul class="navis">
                     <li class="navi"><a href="../">Home</a></li>
@@ -24,7 +22,7 @@
                     <li class="navi"><a href="/favorites">Favorites</a></li>
                     <li class="navi"><a href="../blog">Blog</a></li>
                 </ul>
-                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
                     <span class="theme-toggle-slider"></span>
                 </button>
             </div>
@@ -46,28 +44,28 @@
                     <div class="favorites-grid">
                         <div class="favorite-item">
                             <div class="favorite-image">
-                                <img src="hollowknight.jpeg" alt="Hollow Knight" />
+                                <img loading="lazy" decoding="async" src="hollowknight.jpeg" alt="Hollow Knight" />
                             </div>
                             <h4>Hollow Knight</h4>
                         </div>
 
                         <div class="favorite-item">
                             <div class="favorite-image">
-                                <img src="13sentinels.jpg" alt="13 Sentinels: Aegis Rim" />
+                                <img loading="lazy" decoding="async" src="13sentinels.jpg" alt="13 Sentinels: Aegis Rim" />
                             </div>
                             <h4>13 Sentinels: Aegis Rim</h4>
                         </div>
 
                         <div class="favorite-item">
                             <div class="favorite-image">
-                                <img src="xenoblade2.jpg" alt="Xenoblade Chronicles 2" />
+                                <img loading="lazy" decoding="async" src="xenoblade2.jpg" alt="Xenoblade Chronicles 2" />
                             </div>
                             <h4>Xenoblade Chronicles 2</h4>
                         </div>
 
                         <div class="favorite-item">
                             <div class="favorite-image">
-                                <img src="smtnocturne.jpeg" alt="Shin Megami Tensei: Nocturne" />
+                                <img loading="lazy" decoding="async" src="smtnocturne.jpeg" alt="Shin Megami Tensei: Nocturne" />
                             </div>
                             <h4>Shin Megami Tensei: Nocturne</h4>
                         </div>
@@ -80,28 +78,28 @@
                     <div class="favorites-grid">
                         <div class="favorite-item">
                             <div class="favorite-image">
-                                <img src="acrossspiderverse.jpg" alt="Spider-Man: Across the Spider-Verse" />
+                                <img loading="lazy" decoding="async" src="acrossspiderverse.jpg" alt="Spider-Man: Across the Spider-Verse" />
                             </div>
                             <h4>Spider-Man: Across the Spider-Verse</h4>
                         </div>
 
                         <div class="favorite-item">
                             <div class="favorite-image">
-                                <img src="chainsaw_man.jpg" alt="Chainsaw Man: Reze Arc" />
+                                <img loading="lazy" decoding="async" src="chainsaw_man.jpg" alt="Chainsaw Man: Reze Arc" />
                             </div>
                             <h4>Chainsaw Man: Reze Arc</h4>
                         </div>
 
                         <div class="favorite-item">
                             <div class="favorite-image">
-                                <img src="parasite.jpg" alt="Parasite" />
+                                <img loading="lazy" decoding="async" src="parasite.jpg" alt="Parasite" />
                             </div>
                             <h4>Parasite</h4>
                         </div>
 
                         <div class="favorite-item">
                             <div class="favorite-image">
-                                <img src="paradoxspiral.jpg" alt="Garden of Sinners: Paradox Spiral" />
+                                <img loading="lazy" decoding="async" src="paradoxspiral.jpg" alt="Garden of Sinners: Paradox Spiral" />
                             </div>
                             <h4>Garden of Sinners: Paradox Spiral</h4>
                         </div>
@@ -113,28 +111,28 @@
                     <div class="favorites-grid">
                         <div class="favorite-item">
                             <div class="favorite-image">
-                                <img src="psycho_pass.png" alt="Psycho-Pass" />
+                                <img loading="lazy" decoding="async" src="psycho_pass.png" alt="Psycho-Pass" />
                             </div>
                             <h4>Psycho-Pass</h4>
                         </div>
 
                         <div class="favorite-item">
                             <div class="favorite-image">
-                                <img src="aot.jpg" alt="Attack on Titan" />
+                                <img loading="lazy" decoding="async" src="aot.jpg" alt="Attack on Titan" />
                             </div>
                             <h4>Attack on Titan</h4>
                         </div>
 
                         <div class="favorite-item">
                             <div class="favorite-image">
-                                <img src="durarara.jpg" alt="Durarara" />
+                                <img loading="lazy" decoding="async" src="durarara.jpg" alt="Durarara" />
                             </div>
                             <h4>Durarara</h4>
                         </div>
 
                         <div class="favorite-item">
                             <div class="favorite-image">
-                                <img src="fmab.jpg" alt="Fullmetal Alchemist: Brotherhood" />
+                                <img loading="lazy" decoding="async" src="fmab.jpg" alt="Fullmetal Alchemist: Brotherhood" />
                             </div>
                             <h4>Fullmetal Alchemist: Brotherhood</h4>
                         </div>
@@ -145,42 +143,42 @@
                     <h3>Music</h3>
                     <div class="favorites-grid music-grid">
                         <div class="music-embed-wrapper">
-                            <iframe data-testid="embed-iframe" style="border-radius:12px" 
+                            <iframe title="Spotify song player" data-testid="embed-iframe" style="border-radius:12px" 
                                 src="https://open.spotify.com/embed/track/6I1xSQQzaZfVSWfBWy8Efa?utm_source=generator" 
                                 width="100%" height="152" frameBorder="0" allowfullscreen="" 
                                 allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
                                 loading="lazy"></iframe>
                         </div>
                         <div class="music-embed-wrapper">
-                            <iframe data-testid="embed-iframe" style="border-radius:12px" 
+                            <iframe title="Spotify song player" data-testid="embed-iframe" style="border-radius:12px" 
                                 src="https://open.spotify.com/embed/track/6NtVX4qwWMmAtNFaG485iq?utm_source=generator" 
                                 width="100%" height="152" frameBorder="0" allowfullscreen="" 
                                 allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
                                 loading="lazy"></iframe>
                         </div>
                         <div class="music-embed-wrapper">
-                            <iframe data-testid="embed-iframe" style="border-radius:12px"
+                            <iframe title="Spotify song player" data-testid="embed-iframe" style="border-radius:12px"
                                 src="https://open.spotify.com/embed/track/4oE7MyJhqSD3BaHRpNs8Nl?utm_source=generator"
                                 width="100%" height="152" frameBorder="0" allowfullscreen=""
                                 allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                                 loading="lazy"></iframe>
                         </div>
                         <div class="music-embed-wrapper">
-                            <iframe data-testid="embed-iframe" style="border-radius:12px" 
+                            <iframe title="Spotify song player" data-testid="embed-iframe" style="border-radius:12px" 
                                 src="https://open.spotify.com/embed/track/6ZxPofP51IZY0GOepgf0xQ?utm_source=generator" 
                                 width="100%" height="152" frameBorder="0" allowfullscreen="" 
                                 allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
                                 loading="lazy"></iframe>
                         </div>
                         <div class="music-embed-wrapper">
-                            <iframe data-testid="embed-iframe" style="border-radius:12px"
+                            <iframe title="Spotify song player" data-testid="embed-iframe" style="border-radius:12px"
                                 src="https://open.spotify.com/embed/track/4Vq0kwnZXM8SnS7ilQ9qRa?utm_source=generator"
                                 width="100%" height="152" frameBorder="0" allowfullscreen=""
                                 allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                                 loading="lazy"></iframe>
                         </div>
                         <div class="music-embed-wrapper">
-                            <iframe data-testid="embed-iframe" style="border-radius:12px"
+                            <iframe title="Spotify song player" data-testid="embed-iframe" style="border-radius:12px"
                                 src="https://open.spotify.com/embed/track/2OZVskV28xxJjjhQqKTLSg?utm_source=generator"
                                 width="100%" height="152" frameBorder="0" allowfullscreen=""
                                 allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
@@ -192,9 +190,9 @@
         </div>
     </section>
 
-    <nav id="copyright">
+    <footer id="copyright">
         <p id="copyright2">© 2026 Michael Zuo. All rights reserved.</p>
-    </nav>
+    </footer>
 
 </body>
 

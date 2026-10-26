@@ -1,6 +1,24 @@
 // Shared behavior for every page: dark mode + nav highlighting.
 // Loaded in <head> so the theme is set before the page paints (no light-mode flash).
 
+// ---- Visitor tracking (Google Analytics) ----
+// Lives here so every page that loads script.js is counted.
+// Skipped on localhost so your own testing doesn't inflate the numbers.
+(function () {
+    const GA_ID = 'G-DQSFRR6M8D';
+    if (/^(localhost|127\.0\.0\.1)$/.test(location.hostname) || location.protocol === 'file:') return;
+
+    const tag = document.createElement('script');
+    tag.async = true;
+    tag.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+    document.head.appendChild(tag);
+
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { dataLayer.push(arguments); };
+    gtag('js', new Date());
+    gtag('config', GA_ID);
+})();
+
 (function () {
     const root = document.documentElement;
     const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
