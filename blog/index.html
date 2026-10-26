@@ -7,7 +7,6 @@
         <link rel="icon" type="image/jpeg" href="../jackfrostcomp.jpg">
         <link rel="stylesheet" href="../style.css">
         <script src="../script.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/marked@15.0.12/marked.min.js"></script>
     </head>
     <body>
         <div class="rowtop">
@@ -103,9 +102,6 @@
                         
                         // Generate excerpt (first 200 characters)
                         const excerpt = content.replace(/\n/g, ' ').substring(0, 200).trim() + '...';
-                        
-                        // Render markdown content
-                        const renderedContent = marked.parse(content);
                         
                         // Create blog post element
                         const postElement = document.createElement('article');
