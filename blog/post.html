@@ -7,7 +7,6 @@
         <link rel="icon" type="image/jpeg" href="../jackfrostcomp.jpg">
         <link rel="stylesheet" href="../style.css">
         <script src="../script.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/marked@15.0.12/marked.min.js"></script>
     </head>
     <body>
         <div class="rowtop">
@@ -48,6 +47,7 @@
             <p id="copyright2">© 2026 Michael Zuo. All rights reserved.</p>
         </footer>
 
+        <script src="https://cdn.jsdelivr.net/npm/marked@15.0.12/marked.min.js"></script>
         <script>
             // Blog posts mapping
             const blogPosts = {
@@ -61,7 +61,9 @@
                 const urlParams = new URLSearchParams(window.location.search);
                 const slug = urlParams.get('slug');
                 
-                if (!slug || !blogPosts[slug]) {
+                if (!slug || !Object.prototype.hasOwnProperty.call(blogPosts, slug)) {
+                    document.getElementById('post-title').textContent = 'Post not found';
+                    document.title = "Post not found - Michael Zuo's Blog";
                     document.getElementById('blog-content').innerHTML = '<p>Post not found.</p>';
                     return;
                 }
@@ -107,6 +109,7 @@
                     document.title = `${title} - Michael Zuo's Blog`;
                 } catch (error) {
                     console.error('Error loading post:', error);
+                    document.getElementById('post-title').textContent = 'Could not load post';
                     document.getElementById('blog-content').innerHTML = '<p>Error loading post. Please try again later.</p>';
                 }
             }
