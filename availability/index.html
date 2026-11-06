@@ -64,9 +64,9 @@
     <p class="sub">Click and drag on the calendar to mark when you're free. Drag over marked times to erase them.</p>
     <div class="panel">
       <div class="toolbar">
-        <button id="prev" aria-label="Previous week">←</button>
-        <button id="todayBtn">This week</button>
-        <button id="next" aria-label="Next week">→</button>
+        <button type="button" id="prev" aria-label="Previous week">←</button>
+        <button type="button" id="todayBtn">This week</button>
+        <button type="button" id="next" aria-label="Next week">→</button>
         <span class="range" id="rangeLabel"></span>
         <span class="spacer"></span>
         <label class="opt">Slot
@@ -87,8 +87,8 @@
   <div class="panel">
     <div class="out-head">
       <h2>Your times</h2>
-      <button id="clear">Clear</button>
-      <button id="copy" class="primary">Copy</button>
+      <button type="button" id="clear">Clear</button>
+      <button type="button" id="copy" class="primary">Copy</button>
     </div>
     <div class="toast" id="toast"></div>
     <textarea id="out" spellcheck="false" placeholder="Drag on the calendar to add times…"></textarea>
