@@ -196,7 +196,8 @@
   }
 
   function render() {
-    const rs = ranges();
+    const showWeekends = $('weekends').checked;
+    const rs = ranges().filter(([s]) => showWeekends || ![0, 6].includes(new Date(s).getDay()));
     const tz = $('tz').checked ? tzLabel() : '';
     const style = $('style').value;
     const lines = [];
@@ -330,7 +331,7 @@
   $('slot').onchange = e => { slotMin = +e.target.value; buildGrid(); store.save(); };
   $('startH').onchange = e => { startH = +e.target.value; if (endH <= startH) { endH = startH + 1; fillHours(); } buildGrid(); store.save(); };
   $('endH').onchange = e => { endH = +e.target.value; if (endH <= startH) { startH = endH - 1; fillHours(); } buildGrid(); store.save(); };
-  $('weekends').onchange = () => { buildGrid(); store.save(); };
+  $('weekends').onchange = () => { buildGrid(); render(); };
   ['style','tz','intro'].forEach(id => $(id).onchange = render);
   $('h24').onchange = () => { fillHours(); buildGrid(); render(); };
   $('clear').onclick = () => { selected.clear(); buildGrid(); render(); };
