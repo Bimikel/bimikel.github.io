@@ -354,13 +354,6 @@ p {
     transition: color 0.3s ease;
 }
 
-.course-institution {
-    color: var(--text-tertiary);
-    font-size: 0.9rem;
-    margin: 0;
-    transition: color 0.3s ease;
-}
-
 /* Contact Info Styling */
 #contactinfo {
     padding-top: 0;
@@ -709,14 +702,6 @@ ol a:hover {
 
 .favorite-item:hover .favorite-image img {
     transform: scale(1.05);
-}
-
-/* Ensure xenoblade2 and smtnocturne images match other favorite images */
-.favorite-item:has(img[alt="Xenoblade Chronicles 2"]) .favorite-image img,
-.favorite-item:has(img[src*="xenoblade2"]) .favorite-image img,
-.favorite-item:has(img[src*="smtnocturne"]) .favorite-image img {
-    max-width: 100%;
-    max-height: 100%;
 }
 
 .favorite-item h4 {
