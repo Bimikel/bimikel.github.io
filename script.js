@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Which top-level section a path belongs to. Checks path segments
     // (not just the start) so it also works when opened from a local folder.
-    const SECTIONS = ['resume', 'courses', 'favorites', 'blog'];
+    const SECTIONS = ['resume', 'courses', 'favorites', 'blog', 'availability'];
     function sectionOf(path) {
         const parts = path.split('/');
         return SECTIONS.find(function (s) { return parts.includes(s); }) || 'home';
