@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Availability Picker</title>
+<link rel="icon" type="image/jpeg" href="../jackfrostcomp.jpg">
+<link rel="stylesheet" href="../style.css">
+<script src="../script.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -12,27 +15,26 @@
     --line: #e6e5e0; --line-strong: #d3d2cc; --sel: #2f6fed; --sel-soft: #d9e5fd;
     --today: #fff6e0;
   }
-  @media (prefers-color-scheme: dark) {
-    :root { --bg:#151514; --panel:#1e1e1c; --ink:#ecebe6; --muted:#9a9993;
-      --line:#2d2d2a; --line-strong:#3a3a36; --sel:#5b8ef5; --sel-soft:#24375c; --today:#2b2618; }
-  }
+  [data-theme="dark"] { --bg:#1a1a1a; --panel:#242424; --ink:#ecebe6; --muted:#9a9993;
+    --line:#333; --line-strong:#404040; --sel:#5b8ef5; --sel-soft:#24375c; --today:#2b2618; }
   * { box-sizing: border-box; }
-  body { margin:0; font-family: Inter, system-ui, sans-serif; background:var(--bg); color:var(--ink); font-size:14px; }
+  body { margin:0; background:var(--bg); color:var(--ink); }
+  .wrap { font-family: Inter, system-ui, sans-serif; font-size:14px; line-height:1.4; }
   .wrap { max-width: 1200px; margin: 0 auto; padding: 20px; display: grid; grid-template-columns: 1fr 340px; gap: 20px; }
   @media (max-width: 900px) { .wrap { grid-template-columns: 1fr; } }
-  h1 { font-size: 18px; font-weight: 600; margin: 0 0 4px; }
-  .sub { color: var(--muted); margin: 0 0 14px; }
+  .wrap h1 { font-size: 18px; font-weight: 600; margin: 0 0 4px; color: var(--ink); }
+  .wrap .sub { color: var(--muted); margin: 0 0 14px; font-size: 14px; line-height: 1.4; }
   .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
   .toolbar { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-bottom:12px; }
   .toolbar .range { font-weight:600; margin: 0 6px; min-width: 150px; }
-  button, select { font: inherit; color: var(--ink); background: var(--panel); border:1px solid var(--line-strong);
+  .wrap button, .wrap select { font: inherit; color: var(--ink); background: var(--panel); border:1px solid var(--line-strong);
     border-radius: 8px; padding: 6px 10px; cursor: pointer; }
-  button:hover, select:hover { border-color: var(--muted); }
-  button.primary { background: var(--sel); border-color: var(--sel); color:#fff; font-weight:600; }
+  .wrap button:hover, .wrap select:hover { border-color: var(--muted); }
+  .wrap button.primary { background: var(--sel); border-color: var(--sel); color:#fff; font-weight:600; }
   label.opt { display:flex; align-items:center; gap:6px; color:var(--muted); }
   .spacer { flex:1; }
 
-  .grid-scroll { overflow:auto; max-height: calc(100vh - 170px); border:1px solid var(--line); border-radius:8px; }
+  .grid-scroll { overflow:auto; max-height: calc(100vh - 230px); border:1px solid var(--line); border-radius:8px; }
   .grid { display:grid; user-select:none; -webkit-user-select:none; touch-action:none; min-width: 640px; }
   .hdr { position:sticky; top:0; z-index:2; background:var(--panel); border-bottom:1px solid var(--line-strong);
     text-align:center; padding:6px 2px; font-weight:600; font-size:13px; }
@@ -46,14 +48,9 @@
   .cell.subline { border-top:1px dashed var(--line); }
   .cell.on { background: var(--sel-soft); box-shadow: inset 3px 0 0 var(--sel); }
   .cell.past { background-image: repeating-linear-gradient(45deg, transparent 0 4px, rgba(127,127,127,.08) 4px 8px); }
-  .cell.busy { background-color: rgba(127,127,127,.22); color: var(--muted); font-size: 10px; font-weight: 600;
-    padding-left: 5px; line-height: 22px; overflow: hidden; white-space: nowrap; }
-  .cell.busy.on { background-color: var(--sel-soft); box-shadow: inset 3px 0 0 #e0832f; }
-  .gcal { border-top: 1px solid var(--line); margin-top: 12px; padding-top: 12px; display: grid; gap: 8px; }
-  .gcal-status { color: var(--muted); font-size: 12px; }
 
   .out-head { display:flex; align-items:center; gap:8px; margin-bottom:10px; }
-  .out-head h2 { font-size:15px; margin:0; flex:1; }
+  .out-head h2 { font-size:15px; margin:0; flex:1; color: var(--ink); font-weight:600; }
   textarea { width:100%; min-height: 320px; resize: vertical; font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
     color: var(--ink); background: var(--bg); border:1px solid var(--line); border-radius:8px; padding:10px; }
   .opts { display:grid; gap:8px; margin: 12px 0; }
@@ -63,6 +60,23 @@
 </style>
 </head>
 <body>
+<div class="rowtop">
+    <nav class="navtop" aria-label="Main">
+        <div class="navtop-inner">
+            <ul class="navis">
+                <li class="navi"><a href="../">Home</a></li>
+                <li class="navi"><a href="../resume">Resume</a></li>
+                <li class="navi"><a href="../courses">Courses</a></li>
+                <li class="navi"><a href="../favorites">Favorites</a></li>
+                <li class="navi"><a href="../blog">Blog</a></li>
+                <li class="navi"><a href="/availability/">Availability</a></li>
+            </ul>
+            <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                <span class="theme-toggle-slider"></span>
+            </button>
+        </div>
+    </nav>
+</div>
 <div class="wrap">
   <div>
     <h1>Availability Picker</h1>
@@ -83,7 +97,7 @@
         <label class="opt">To
           <select id="endH"></select>
         </label>
-        <label class="opt"><input type="checkbox" id="weekends" checked> Weekends</label>
+        <label class="opt"><input type="checkbox" id="weekends"> Weekends</label>
       </div>
       <div class="grid-scroll" id="scroller"><div class="grid" id="grid"></div></div>
     </div>
@@ -109,17 +123,9 @@
       </div>
       <div class="row">
         <label class="opt"><input type="checkbox" id="tz" checked> Add time zone</label>
-        <label class="opt"><input type="checkbox" id="intro" checked> Add intro line</label>
+        <label class="opt"><input type="checkbox" id="intro"> Add intro line</label>
         <label class="opt"><input type="checkbox" id="h24"> 24-hour</label>
       </div>
-    </div>
-    <div class="gcal">
-      <div class="row">
-        <button type="button" id="gcalBtn">Connect Google Calendar</button>
-        <button type="button" id="gcalRefresh" hidden>Refresh</button>
-      </div>
-      <label class="opt"><input type="checkbox" id="skipBusy"> Skip busy times when dragging</label>
-      <div class="gcal-status" id="gcalStatus">Shows your events as grey "Busy" blocks. You can still drag over them.</div>
     </div>
     <div class="hint">Selections stay put when you switch weeks, so you can mark times across several weeks and copy them all at once. You can also edit the text box before copying.</div>
   </div>
@@ -138,7 +144,7 @@
   const store = {
     load() { try { return JSON.parse(localStorage.getItem('availPicker') || 'null'); } catch { return null; } },
     save() { try { localStorage.setItem('availPicker', JSON.stringify({
-      sel:[...selected], slotMin, startH, endH,
+      v:2, sel:[...selected], slotMin, startH, endH,
       style:$('style').value, tz:$('tz').checked, intro:$('intro').checked, h24:$('h24').checked,
       weekends:$('weekends').checked })); } catch {} }
   };
@@ -272,79 +278,7 @@
     const end = addDays(weekStart, 6);
     $('rangeLabel').textContent = weekStart.toLocaleDateString(undefined,{month:'short',day:'numeric'}) + ' – ' +
       end.toLocaleDateString(undefined,{month:'short',day:'numeric', year:'numeric'});
-    markBusy();
-    ensureBusy();
   }
-
-  // ---------- Google Calendar (free/busy only) ----------
-  // Paste your OAuth "Web application" client ID here (Google Cloud Console).
-  const GOOGLE_CLIENT_ID = '237639232456-hu1r0q5j1q7e0ui9j1k9fd6bc5nqd3dt.apps.googleusercontent.com';
-  const SCOPE = 'https://www.googleapis.com/auth/calendar.freebusy';
-  let token = null, tokenClient = null, busy = [], fetchedWeeks = new Set(), pendingAfterAuth = null;
-  const gStatus = msg => { $('gcalStatus').textContent = msg; };
-
-  function isBusy(t) { const e = t + slotMin*60000; return busy.some(([s,b]) => s < e && b > t); }
-  function markBusy() {
-    grid.querySelectorAll('.cell').forEach(c => {
-      const t = +c.dataset.t, b = isBusy(t);
-      c.classList.toggle('busy', b);
-      c.textContent = b && !isBusy(t - slotMin*60000) ? 'Busy' : '';
-    });
-  }
-  function weekKey() { return weekStart.getTime(); }
-  async function fetchBusy(force) {
-    if (!token) return;
-    const key = weekKey();
-    if (!force && fetchedWeeks.has(key)) return;
-    const timeMin = new Date(weekStart), timeMax = addDays(weekStart, 7);
-    gStatus('Loading your calendar…');
-    try {
-      const res = await fetch('https://www.googleapis.com/calendar/v3/freeBusy', {
-        method: 'POST',
-        headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ timeMin: timeMin.toISOString(), timeMax: timeMax.toISOString(), items: [{ id: 'primary' }] })
-      });
-      if (res.status === 401) { token = null; pendingAfterAuth = () => fetchBusy(true); tokenClient.requestAccessToken({ prompt: '' }); return; }
-      if (!res.ok) throw new Error('HTTP ' + res.status);
-      const data = await res.json();
-      const lo = timeMin.getTime(), hi = timeMax.getTime();
-      busy = busy.filter(([s,e]) => e <= lo || s >= hi);   // replace this week's blocks
-      for (const b of (data.calendars?.primary?.busy || [])) busy.push([Date.parse(b.start), Date.parse(b.end)]);
-      fetchedWeeks.add(key);
-      markBusy();
-      gStatus('Connected. Busy times shown in grey.');
-    } catch (err) { gStatus('Could not load calendar (' + err.message + ').'); }
-  }
-  function ensureBusy() { if (token) fetchBusy(false); }
-
-  function setupGoogle() {
-    if (!GOOGLE_CLIENT_ID) {
-      $('gcalBtn').disabled = true;
-      gStatus('Google Calendar isn\'t set up on this page yet.');
-      return;
-    }
-    if (!window.google?.accounts?.oauth2) { setTimeout(setupGoogle, 200); return; }
-    tokenClient = google.accounts.oauth2.initTokenClient({
-      client_id: GOOGLE_CLIENT_ID, scope: SCOPE,
-      callback: resp => {
-        if (resp.error) { gStatus('Sign-in cancelled.'); return; }
-        token = resp.access_token;
-        $('gcalBtn').textContent = 'Disconnect';
-        $('gcalRefresh').hidden = false;
-        if (pendingAfterAuth) { const f = pendingAfterAuth; pendingAfterAuth = null; f(); }
-        else fetchBusy(true);
-      }
-    });
-  }
-  $('gcalBtn').onclick = () => {
-    if (token) {
-      try { google.accounts.oauth2.revoke(token, () => {}); } catch {}
-      token = null; busy = []; fetchedWeeks.clear(); markBusy();
-      $('gcalBtn').textContent = 'Connect Google Calendar'; $('gcalRefresh').hidden = true;
-      gStatus('Disconnected.');
-    } else if (tokenClient) tokenClient.requestAccessToken({ prompt: '' });
-  };
-  $('gcalRefresh').onclick = () => { fetchedWeeks.clear(); fetchBusy(true); };
 
   // ---------- drag (pointer events: mouse + touch) ----------
   let dragging = false, paintOn = true, anchor = null, snapshot = null;
@@ -364,7 +298,6 @@
       const day = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate()).getTime();
       const m = t - day;
       if (day >= d0 && day <= d1 && m >= m0 && m <= m1) {
-        if (paintOn && $('skipBusy').checked && c.classList.contains('busy')) return;
         setSlot(t, paintOn);
       }
     });
@@ -415,11 +348,10 @@
     slotMin = saved.slotMin || 30; startH = saved.startH ?? 8; endH = saved.endH ?? 21;
     $('slot').value = slotMin;
     if (saved.style) $('style').value = saved.style;
-    ['tz','intro','h24','weekends'].forEach(k => { if (k in saved) $(k).checked = saved[k]; });
+    ['tz','h24'].concat(saved.v === 2 ? ['intro','weekends'] : []).forEach(k => { if (k in saved) $(k).checked = saved[k]; });
   }
-  fillHours(); setupGoogle(); buildGrid(); render();
+  fillHours(); buildGrid(); render();
 })();
 </script>
-<script src="https://accounts.google.com/gsi/client" async></script>
 </body>
 </html>
