@@ -46,6 +46,11 @@
   .cell.subline { border-top:1px dashed var(--line); }
   .cell.on { background: var(--sel-soft); box-shadow: inset 3px 0 0 var(--sel); }
   .cell.past { background-image: repeating-linear-gradient(45deg, transparent 0 4px, rgba(127,127,127,.08) 4px 8px); }
+  .cell.busy { background-color: rgba(127,127,127,.22); color: var(--muted); font-size: 10px; font-weight: 600;
+    padding-left: 5px; line-height: 22px; overflow: hidden; white-space: nowrap; }
+  .cell.busy.on { background-color: var(--sel-soft); box-shadow: inset 3px 0 0 #e0832f; }
+  .gcal { border-top: 1px solid var(--line); margin-top: 12px; padding-top: 12px; display: grid; gap: 8px; }
+  .gcal-status { color: var(--muted); font-size: 12px; }
 
   .out-head { display:flex; align-items:center; gap:8px; margin-bottom:10px; }
   .out-head h2 { font-size:15px; margin:0; flex:1; }
@@ -107,6 +112,14 @@
         <label class="opt"><input type="checkbox" id="intro" checked> Add intro line</label>
         <label class="opt"><input type="checkbox" id="h24"> 24-hour</label>
       </div>
+    </div>
+    <div class="gcal">
+      <div class="row">
+        <button type="button" id="gcalBtn">Connect Google Calendar</button>
+        <button type="button" id="gcalRefresh" hidden>Refresh</button>
+      </div>
+      <label class="opt"><input type="checkbox" id="skipBusy"> Skip busy times when dragging</label>
+      <div class="gcal-status" id="gcalStatus">Shows your events as grey "Busy" blocks. You can still drag over them.</div>
     </div>
     <div class="hint">Selections stay put when you switch weeks, so you can mark times across several weeks and copy them all at once. You can also edit the text box before copying.</div>
   </div>
@@ -259,7 +272,79 @@
     const end = addDays(weekStart, 6);
     $('rangeLabel').textContent = weekStart.toLocaleDateString(undefined,{month:'short',day:'numeric'}) + ' – ' +
       end.toLocaleDateString(undefined,{month:'short',day:'numeric', year:'numeric'});
+    markBusy();
+    ensureBusy();
   }
+
+  // ---------- Google Calendar (free/busy only) ----------
+  // Paste your OAuth "Web application" client ID here (Google Cloud Console).
+  const GOOGLE_CLIENT_ID = '';
+  const SCOPE = 'https://www.googleapis.com/auth/calendar.freebusy';
+  let token = null, tokenClient = null, busy = [], fetchedWeeks = new Set(), pendingAfterAuth = null;
+  const gStatus = msg => { $('gcalStatus').textContent = msg; };
+
+  function isBusy(t) { const e = t + slotMin*60000; return busy.some(([s,b]) => s < e && b > t); }
+  function markBusy() {
+    grid.querySelectorAll('.cell').forEach(c => {
+      const t = +c.dataset.t, b = isBusy(t);
+      c.classList.toggle('busy', b);
+      c.textContent = b && !isBusy(t - slotMin*60000) ? 'Busy' : '';
+    });
+  }
+  function weekKey() { return weekStart.getTime(); }
+  async function fetchBusy(force) {
+    if (!token) return;
+    const key = weekKey();
+    if (!force && fetchedWeeks.has(key)) return;
+    const timeMin = new Date(weekStart), timeMax = addDays(weekStart, 7);
+    gStatus('Loading your calendar…');
+    try {
+      const res = await fetch('https://www.googleapis.com/calendar/v3/freeBusy', {
+        method: 'POST',
+        headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ timeMin: timeMin.toISOString(), timeMax: timeMax.toISOString(), items: [{ id: 'primary' }] })
+      });
+      if (res.status === 401) { token = null; pendingAfterAuth = () => fetchBusy(true); tokenClient.requestAccessToken({ prompt: '' }); return; }
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
+      const lo = timeMin.getTime(), hi = timeMax.getTime();
+      busy = busy.filter(([s,e]) => e <= lo || s >= hi);   // replace this week's blocks
+      for (const b of (data.calendars?.primary?.busy || [])) busy.push([Date.parse(b.start), Date.parse(b.end)]);
+      fetchedWeeks.add(key);
+      markBusy();
+      gStatus('Connected. Busy times shown in grey.');
+    } catch (err) { gStatus('Could not load calendar (' + err.message + ').'); }
+  }
+  function ensureBusy() { if (token) fetchBusy(false); }
+
+  function setupGoogle() {
+    if (!GOOGLE_CLIENT_ID) {
+      $('gcalBtn').disabled = true;
+      gStatus('Google Calendar isn\'t set up on this page yet.');
+      return;
+    }
+    if (!window.google?.accounts?.oauth2) { setTimeout(setupGoogle, 200); return; }
+    tokenClient = google.accounts.oauth2.initTokenClient({
+      client_id: GOOGLE_CLIENT_ID, scope: SCOPE,
+      callback: resp => {
+        if (resp.error) { gStatus('Sign-in cancelled.'); return; }
+        token = resp.access_token;
+        $('gcalBtn').textContent = 'Disconnect';
+        $('gcalRefresh').hidden = false;
+        if (pendingAfterAuth) { const f = pendingAfterAuth; pendingAfterAuth = null; f(); }
+        else fetchBusy(true);
+      }
+    });
+  }
+  $('gcalBtn').onclick = () => {
+    if (token) {
+      try { google.accounts.oauth2.revoke(token, () => {}); } catch {}
+      token = null; busy = []; fetchedWeeks.clear(); markBusy();
+      $('gcalBtn').textContent = 'Connect Google Calendar'; $('gcalRefresh').hidden = true;
+      gStatus('Disconnected.');
+    } else if (tokenClient) tokenClient.requestAccessToken({ prompt: '' });
+  };
+  $('gcalRefresh').onclick = () => { fetchedWeeks.clear(); fetchBusy(true); };
 
   // ---------- drag (pointer events: mouse + touch) ----------
   let dragging = false, paintOn = true, anchor = null, snapshot = null;
@@ -278,7 +363,10 @@
       const t = +c.dataset.t; const dt = new Date(t);
       const day = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate()).getTime();
       const m = t - day;
-      if (day >= d0 && day <= d1 && m >= m0 && m <= m1) setSlot(t, paintOn);
+      if (day >= d0 && day <= d1 && m >= m0 && m <= m1) {
+        if (paintOn && $('skipBusy').checked && c.classList.contains('busy')) return;
+        setSlot(t, paintOn);
+      }
     });
     grid.querySelectorAll('.cell').forEach(c => c.classList.toggle('on', isOn(+c.dataset.t)));
   }
@@ -329,8 +417,9 @@
     if (saved.style) $('style').value = saved.style;
     ['tz','intro','h24','weekends'].forEach(k => { if (k in saved) $(k).checked = saved[k]; });
   }
-  fillHours(); buildGrid(); render();
+  fillHours(); setupGoogle(); buildGrid(); render();
 })();
 </script>
+<script src="https://accounts.google.com/gsi/client" async></script>
 </body>
 </html>
