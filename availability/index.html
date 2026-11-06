@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Availability Picker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f7f5; --panel: #fff; --ink: #1d1d1b; --muted: #7a7a74;
+    --line: #e6e5e0; --line-strong: #d3d2cc; --sel: #2f6fed; --sel-soft: #d9e5fd;
+    --today: #fff6e0;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#151514; --panel:#1e1e1c; --ink:#ecebe6; --muted:#9a9993;
+      --line:#2d2d2a; --line-strong:#3a3a36; --sel:#5b8ef5; --sel-soft:#24375c; --today:#2b2618; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: Inter, system-ui, sans-serif; background:var(--bg); color:var(--ink); font-size:14px; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 20px; display: grid; grid-template-columns: 1fr 340px; gap: 20px; }
+  @media (max-width: 900px) { .wrap { grid-template-columns: 1fr; } }
+  h1 { font-size: 18px; font-weight: 600; margin: 0 0 4px; }
+  .sub { color: var(--muted); margin: 0 0 14px; }
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
+  .toolbar { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-bottom:12px; }
+  .toolbar .range { font-weight:600; margin: 0 6px; min-width: 150px; }
+  button, select { font: inherit; color: var(--ink); background: var(--panel); border:1px solid var(--line-strong);
+    border-radius: 8px; padding: 6px 10px; cursor: pointer; }
+  button:hover, select:hover { border-color: var(--muted); }
+  button.primary { background: var(--sel); border-color: var(--sel); color:#fff; font-weight:600; }
+  label.opt { display:flex; align-items:center; gap:6px; color:var(--muted); }
+  .spacer { flex:1; }
+
+  .grid-scroll { overflow:auto; max-height: calc(100vh - 170px); border:1px solid var(--line); border-radius:8px; }
+  .grid { display:grid; user-select:none; -webkit-user-select:none; touch-action:none; min-width: 640px; }
+  .hdr { position:sticky; top:0; z-index:2; background:var(--panel); border-bottom:1px solid var(--line-strong);
+    text-align:center; padding:6px 2px; font-weight:600; font-size:13px; }
+  .hdr small { display:block; color:var(--muted); font-weight:400; }
+  .hdr.today { background: var(--today); }
+  .corner { position:sticky; top:0; left:0; z-index:3; background:var(--panel); border-bottom:1px solid var(--line-strong); }
+  .tlabel { position:sticky; left:0; z-index:1; background:var(--panel); color:var(--muted); font-size:11px;
+    text-align:right; padding: 0 6px; transform: translateY(-7px); white-space:nowrap; }
+  .cell { height: 22px; border-left:1px solid var(--line); cursor: pointer; }
+  .cell.hourline { border-top:1px solid var(--line-strong); }
+  .cell.subline { border-top:1px dashed var(--line); }
+  .cell.on { background: var(--sel-soft); box-shadow: inset 3px 0 0 var(--sel); }
+  .cell.past { background-image: repeating-linear-gradient(45deg, transparent 0 4px, rgba(127,127,127,.08) 4px 8px); }
+
+  .out-head { display:flex; align-items:center; gap:8px; margin-bottom:10px; }
+  .out-head h2 { font-size:15px; margin:0; flex:1; }
+  textarea { width:100%; min-height: 320px; resize: vertical; font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+    color: var(--ink); background: var(--bg); border:1px solid var(--line); border-radius:8px; padding:10px; }
+  .opts { display:grid; gap:8px; margin: 12px 0; }
+  .row { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+  .hint { color:var(--muted); font-size:12px; margin-top:10px; line-height:1.5; }
+  .toast { color: var(--sel); font-weight:600; font-size:13px; min-height: 18px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div>
+    <h1>Availability Picker</h1>
+    <p class="sub">Click and drag on the calendar to mark when you're free. Drag over marked times to erase them.</p>
+    <div class="panel">
+      <div class="toolbar">
+        <button type="button" id="prev" aria-label="Previous week">←</button>
+        <button type="button" id="todayBtn">This week</button>
+        <button type="button" id="next" aria-label="Next week">→</button>
+        <span class="range" id="rangeLabel"></span>
+        <span class="spacer"></span>
+        <label class="opt">Slot
+          <select id="slot"><option value="15">15m</option><option value="30" selected>30m</option><option value="60">1h</option></select>
+        </label>
+        <label class="opt">From
+          <select id="startH"></select>
+        </label>
+        <label class="opt">To
+          <select id="endH"></select>
+        </label>
+        <label class="opt"><input type="checkbox" id="weekends" checked> Weekends</label>
+      </div>
+      <div class="grid-scroll" id="scroller"><div class="grid" id="grid"></div></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="out-head">
+      <h2>Your times</h2>
+      <button type="button" id="clear">Clear</button>
+      <button type="button" id="copy" class="primary">Copy</button>
+    </div>
+    <div class="toast" id="toast"></div>
+    <textarea id="out" spellcheck="false" placeholder="Drag on the calendar to add times…"></textarea>
+    <div class="opts">
+      <div class="row">
+        <label class="opt">Style
+          <select id="style">
+            <option value="bullets">• Bullets by day</option>
+            <option value="lines">One line per day</option>
+            <option value="each">One line per slot</option>
+          </select>
+        </label>
+      </div>
+      <div class="row">
+        <label class="opt"><input type="checkbox" id="tz" checked> Add time zone</label>
+        <label class="opt"><input type="checkbox" id="intro" checked> Add intro line</label>
+        <label class="opt"><input type="checkbox" id="h24"> 24-hour</label>
+      </div>
+    </div>
+    <div class="hint">Selections stay put when you switch weeks, so you can mark times across several weeks and copy them all at once. You can also edit the text box before copying.</div>
+  </div>
+</div>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const grid = $('grid'), out = $('out');
+  const DAY_MS = 864e5;
+  let selected = new Set();       // keys: epoch ms of slot start
+  let weekStart = startOfWeek(new Date());
+  let slotMin = 30, startH = 8, endH = 21;
+
+  // ---------- persistence (best effort) ----------
+  const store = {
+    load() { try { return JSON.parse(localStorage.getItem('availPicker') || 'null'); } catch { return null; } },
+    save() { try { localStorage.setItem('availPicker', JSON.stringify({
+      sel:[...selected], slotMin, startH, endH,
+      style:$('style').value, tz:$('tz').checked, intro:$('intro').checked, h24:$('h24').checked,
+      weekends:$('weekends').checked })); } catch {} }
+  };
+
+  function startOfWeek(d) {  // Monday
+    const x = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    const dow = (x.getDay() + 6) % 7;
+    x.setDate(x.getDate() - dow);
+    return x;
+  }
+  function addDays(d, n) { const x = new Date(d); x.setDate(x.getDate() + n); return x; }
+
+  // ---------- formatting ----------
+  function fmtTime(d) {
+    const h24 = $('h24').checked;
+    if (h24) return String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+    let h = d.getHours() % 12 || 12, m = d.getMinutes();
+    return h + (m ? ':' + String(m).padStart(2,'0') : '') + (d.getHours() < 12 ? 'am' : 'pm');
+  }
+  function fmtRange(a, b) {
+    if (!$('h24').checked) {
+      const sameHalf = (a.getHours() < 12) === (b.getHours() < 12) && !(b.getHours()===0 && b.getMinutes()===0);
+      if (sameHalf) return fmtTime(a).replace(/am|pm/, '') + '–' + fmtTime(b);
+    }
+    return fmtTime(a) + '–' + fmtTime(b);
+  }
+  function fmtDay(d) {
+    return d.toLocaleDateString(undefined, { weekday:'short', month:'short', day:'numeric' });
+  }
+  function tzLabel() {
+    try {
+      const parts = new Intl.DateTimeFormat('en-US', { timeZoneName:'short' }).formatToParts(new Date());
+      return parts.find(p => p.type === 'timeZoneName')?.value || '';
+    } catch { return ''; }
+  }
+
+  // ---------- build ranges from selected slots ----------
+  function ranges() {
+    // each key is a slot start; slot length is stored per key in slotLen map
+    const items = [...selected].map(k => { const [s, len] = k.split('|').map(Number); return [s, s + len*60000]; })
+      .sort((a,b) => a[0]-b[0]);
+    const merged = [];
+    for (const [s,e] of items) {
+      const last = merged[merged.length-1];
+      if (last && s <= last[1] && new Date(s).toDateString() === new Date(last[0]).toDateString()) last[1] = Math.max(last[1], e);
+      else merged.push([s,e]);
+    }
+    return merged;
+  }
+
+  function render() {
+    const rs = ranges();
+    const tz = $('tz').checked ? tzLabel() : '';
+    const style = $('style').value;
+    const lines = [];
+    if (rs.length && $('intro').checked) lines.push(`Here are some times that work for me${tz ? ' (' + tz + ')' : ''}:`, '');
+    const byDay = new Map();
+    for (const [s,e] of rs) {
+      const day = new Date(s).toDateString();
+      if (!byDay.has(day)) byDay.set(day, []);
+      byDay.get(day).push(fmtRange(new Date(s), new Date(e)));
+    }
+    const tzSuffix = tz && !$('intro').checked ? ' ' + tz : '';
+    for (const [day, list] of byDay) {
+      const d = new Date(day);
+      if (style === 'bullets') { lines.push(fmtDay(d) + tzSuffix.replace(' ', ' (').concat(tzSuffix ? ')' : '')); list.forEach(r => lines.push('  • ' + r)); }
+      else if (style === 'lines') lines.push(fmtDay(d) + ': ' + list.join(', ') + tzSuffix);
+      else list.forEach(r => lines.push(fmtDay(d) + ', ' + r + tzSuffix));
+    }
+    if (rs.length && $('intro').checked) lines.push('', 'Let me know what works best!');
+    out.value = lines.join('\n');
+    store.save();
+  }
+
+  // ---------- grid ----------
+  function keyFor(ms) { return ms + '|' + slotMin; }
+  function isOn(ms) {
+    // on if any stored slot covers this slot's start
+    for (const k of selected) { const [s,len] = k.split('|').map(Number); if (ms >= s && ms < s + len*60000) return true; }
+    return false;
+  }
+  function setSlot(ms, on) {
+    const end = ms + slotMin*60000;
+    // remove any stored slots overlapping this one, then re-add pieces outside it
+    for (const k of [...selected]) {
+      const [s,len] = k.split('|').map(Number); const e = s + len*60000;
+      if (s < end && e > ms) {
+        selected.delete(k);
+        // keep parts outside [ms,end) at 15-min granularity
+        for (let t = s; t < e; t += 15*60000) if (t < ms || t >= end) selected.add(t + '|15');
+      }
+    }
+    if (on) selected.add(keyFor(ms));
+  }
+
+  function buildGrid() {
+    const days = [];
+    for (let i = 0; i < 7; i++) {
+      const d = addDays(weekStart, i);
+      const dow = d.getDay();
+      if (!$('weekends').checked && (dow === 0 || dow === 6)) continue;
+      days.push(d);
+    }
+    grid.style.gridTemplateColumns = `56px repeat(${days.length}, 1fr)`;
+    grid.innerHTML = '';
+    const corner = document.createElement('div'); corner.className = 'corner'; grid.appendChild(corner);
+    const todayStr = new Date().toDateString();
+    for (const d of days) {
+      const h = document.createElement('div');
+      h.className = 'hdr' + (d.toDateString() === todayStr ? ' today' : '');
+      h.innerHTML = d.toLocaleDateString(undefined,{weekday:'short'}) + '<small>' + d.toLocaleDateString(undefined,{month:'short', day:'numeric'}) + '</small>';
+      grid.appendChild(h);
+    }
+    const now = Date.now();
+    const perHour = 60 / slotMin;
+    for (let r = 0; r < (endH - startH) * perHour; r++) {
+      const mins = startH*60 + r*slotMin;
+      const lab = document.createElement('div'); lab.className = 'tlabel';
+      if (mins % 60 === 0) { const t = new Date(2000,0,1,Math.floor(mins/60)); lab.textContent = fmtTime(t); }
+      grid.appendChild(lab);
+      for (const d of days) {
+        const t = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 0, mins).getTime();
+        const c = document.createElement('div');
+        c.className = 'cell ' + (mins % 60 === 0 ? 'hourline' : 'subline');
+        if (t + slotMin*60000 <= now) c.classList.add('past');
+        if (isOn(t)) c.classList.add('on');
+        c.dataset.t = t;
+        grid.appendChild(c);
+      }
+    }
+    const end = addDays(weekStart, 6);
+    $('rangeLabel').textContent = weekStart.toLocaleDateString(undefined,{month:'short',day:'numeric'}) + ' – ' +
+      end.toLocaleDateString(undefined,{month:'short',day:'numeric', year:'numeric'});
+  }
+
+  // ---------- drag (pointer events: mouse + touch) ----------
+  let dragging = false, paintOn = true, anchor = null, snapshot = null;
+  function cellAt(x, y) { const el = document.elementFromPoint(x, y); return el && el.classList.contains('cell') ? el : null; }
+  function applyRect(a, b) {
+    // rectangle selection between anchor cell a and current cell b
+    selected = new Set(snapshot);
+    const ta = +a.dataset.t, tb = +b.dataset.t;
+    const da = new Date(ta), db = new Date(tb);
+    const dayA = new Date(da.getFullYear(), da.getMonth(), da.getDate()).getTime();
+    const dayB = new Date(db.getFullYear(), db.getMonth(), db.getDate()).getTime();
+    const mA = ta - dayA, mB = tb - dayB;
+    const d0 = Math.min(dayA, dayB), d1 = Math.max(dayA, dayB);
+    const m0 = Math.min(mA, mB), m1 = Math.max(mA, mB);
+    grid.querySelectorAll('.cell').forEach(c => {
+      const t = +c.dataset.t; const dt = new Date(t);
+      const day = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate()).getTime();
+      const m = t - day;
+      if (day >= d0 && day <= d1 && m >= m0 && m <= m1) setSlot(t, paintOn);
+    });
+    grid.querySelectorAll('.cell').forEach(c => c.classList.toggle('on', isOn(+c.dataset.t)));
+  }
+  grid.addEventListener('pointerdown', e => {
+    const c = cellAt(e.clientX, e.clientY); if (!c) return;
+    e.preventDefault();
+    dragging = true; anchor = c; snapshot = new Set(selected);
+    paintOn = !c.classList.contains('on');
+    applyRect(anchor, c);
+  });
+  window.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    const c = cellAt(e.clientX, e.clientY); if (c) applyRect(anchor, c);
+  });
+  window.addEventListener('pointerup', () => { if (dragging) { dragging = false; render(); } });
+
+  // ---------- controls ----------
+  function fillHours() {
+    const mk = (sel, val, from, to) => {
+      sel.innerHTML = '';
+      for (let h = from; h <= to; h++) { const o = document.createElement('option'); o.value = h; o.textContent = fmtTime(new Date(2000,0,1,h % 24)) + (h===24?' (midnight)':''); if (h===val) o.selected = true; sel.appendChild(o); }
+    };
+    mk($('startH'), startH, 0, 23); mk($('endH'), endH, 1, 24);
+  }
+  $('prev').onclick = () => { weekStart = addDays(weekStart, -7); buildGrid(); };
+  $('next').onclick = () => { weekStart = addDays(weekStart, 7); buildGrid(); };
+  $('todayBtn').onclick = () => { weekStart = startOfWeek(new Date()); buildGrid(); };
+  $('slot').onchange = e => { slotMin = +e.target.value; buildGrid(); store.save(); };
+  $('startH').onchange = e => { startH = +e.target.value; if (endH <= startH) { endH = startH + 1; fillHours(); } buildGrid(); store.save(); };
+  $('endH').onchange = e => { endH = +e.target.value; if (endH <= startH) { startH = endH - 1; fillHours(); } buildGrid(); store.save(); };
+  $('weekends').onchange = () => { buildGrid(); store.save(); };
+  ['style','tz','intro'].forEach(id => $(id).onchange = render);
+  $('h24').onchange = () => { fillHours(); buildGrid(); render(); };
+  $('clear').onclick = () => { selected.clear(); buildGrid(); render(); };
+  $('copy').onclick = async () => {
+    const toast = $('toast');
+    try { await navigator.clipboard.writeText(out.value); toast.textContent = 'Copied ✓'; }
+    catch { out.focus(); out.select(); toast.textContent = 'Selected — press Ctrl/⌘+C to copy'; }
+    setTimeout(() => toast.textContent = '', 2500);
+  };
+
+  // ---------- init ----------
+  const saved = store.load();
+  if (saved) {
+    selected = new Set((saved.sel || []).filter(k => +k.split('|')[0] + 7*DAY_MS > Date.now() - 30*DAY_MS));
+    slotMin = saved.slotMin || 30; startH = saved.startH ?? 8; endH = saved.endH ?? 21;
+    $('slot').value = slotMin;
+    if (saved.style) $('style').value = saved.style;
+    ['tz','intro','h24','weekends'].forEach(k => { if (k in saved) $(k).checked = saved[k]; });
+  }
+  fillHours(); buildGrid(); render();
+})();
+</script>
+</body>
+</html>
