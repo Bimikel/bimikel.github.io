@@ -83,12 +83,20 @@ document.addEventListener('DOMContentLoaded', function () {
     darkQuery.addEventListener('change', function (e) {
         if (!savedTheme()) {
             root.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+            syncToggleState();
         }
     });
+
+    // Tell screen readers whether dark mode is on (the sun/moon icon is visual only).
+    function syncToggleState() {
+        const toggle = document.getElementById('themeToggle');
+        if (toggle) toggle.setAttribute('aria-pressed', String(root.getAttribute('data-theme') === 'dark'));
+    }
 
     function toggleTheme() {
         const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
         root.setAttribute('data-theme', next);
+        syncToggleState();
         try { localStorage.setItem('theme', next); } catch (e) {}
     }
 
@@ -110,13 +118,16 @@ document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('DOMContentLoaded', function () {
         const toggle = document.getElementById('themeToggle');
         if (toggle) toggle.addEventListener('click', toggleTheme);
+        syncToggleState();
 
         const currentSection = sectionOf(location.pathname);
         const currentPage = normalize(location.pathname);
 
         document.querySelectorAll('.navis a').forEach(function (link) {
             // link.pathname is the fully resolved path, so "../resume" and "/resume" both work.
-            link.classList.toggle('active', sectionOf(link.pathname) === currentSection);
+            const isCurrent = sectionOf(link.pathname) === currentSection;
+            link.classList.toggle('active', isCurrent);
+            if (isCurrent) link.setAttribute('aria-current', 'page');
 
             // Clicking the link for the page you're already on scrolls to the top
             // instead of reloading. (Blog stays a real link on a blog post page.)
