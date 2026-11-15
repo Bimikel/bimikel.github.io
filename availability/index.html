@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #f7f7f5; --panel: #fff; --ink: #1d1d1b; --muted: #7a7a74;
+    --bg: #f7f7f5; --panel: #fff; --ink: #1d1d1b; --muted: #6b6b66;
     --line: #e6e5e0; --line-strong: #d3d2cc; --sel: #2f6fed; --sel-soft: #d9e5fd;
     --today: #fff6e0;
   }
@@ -20,8 +20,8 @@
   * { box-sizing: border-box; }
   body { margin:0; background:var(--bg); color:var(--ink); }
   .wrap { font-family: Inter, system-ui, sans-serif; font-size:14px; line-height:1.4; }
-  .wrap { max-width: 1200px; margin: 0 auto; padding: 20px; display: grid; grid-template-columns: 1fr 340px; gap: 20px; }
-  @media (max-width: 900px) { .wrap { grid-template-columns: 1fr; } }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 20px; display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 20px; }
+  @media (max-width: 900px) { .wrap { grid-template-columns: minmax(0, 1fr); } }
   .wrap h1 { font-size: 18px; font-weight: 600; margin: 0 0 4px; color: var(--ink); }
   .wrap .sub { color: var(--muted); margin: 0 0 14px; font-size: 14px; line-height: 1.4; }
   .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
@@ -105,12 +105,12 @@
 
   <div class="panel">
     <div class="out-head">
-      <h2>Your times</h2>
+      <h2 id="outTitle">Your times</h2>
       <button type="button" id="clear">Clear</button>
       <button type="button" id="copy" class="primary">Copy</button>
     </div>
-    <div class="toast" id="toast"></div>
-    <textarea id="out" spellcheck="false" placeholder="Drag on the calendar to add times…"></textarea>
+    <div class="toast" id="toast" role="status"></div>
+    <textarea id="out" aria-labelledby="outTitle" spellcheck="false" placeholder="Drag on the calendar to add times…"></textarea>
     <div class="opts">
       <div class="row">
         <label class="opt">Style
